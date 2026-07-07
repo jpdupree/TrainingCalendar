@@ -18,6 +18,8 @@ Everything lives in `index.html`. No build step, no dependencies beyond Google F
 - **Countdowns**: hardcoded event list inside the `counters` IIFE — update it if races change.
 - **Current week detection**: date-based; auto-expands and scrolls on load.
 - **Notes**: per-week textarea persisted to `localStorage` under key `sangre26-notes` (`{w0: "...", w1: "..."}`), wrapped in try/catch. Never migrate or rename this key without writing a migration — his logged notes live there.
+- **Readiness snapshot**: `READY` const near the end of the script (`{date, hrv, lo, hi, status, recovery}`) renders Coros HRV/recovery tiles in the header. A daily scheduled routine pulls fresh numbers from the Coros MCP connector and commits an update; any session touching the repo should refresh it too. `status` must be the Coros assessment word (`low|below|normal|above`), not recomputed. Tiles auto-style as stale when `date` is >1 day old — never fake the date.
+- **Data source**: Jason's Coros account is connected via MCP (sleep HRV, recovery, workouts). Pull real numbers instead of asking him to report them. Plan rule: HRV below range two mornings in a row → drop that day's quality work.
 
 ## Design system (do not drift)
 - Dark theme only. Palette in `:root`: bg `#12141A`, cards `#1B1F27`/`#222733`, text `#E9E7E0`.
