@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12141A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Sangre 2026 — Training Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12141A; --card:#1B1F27; --card2:#222733; --line:#2E3442;
+  --text:#E9E7E0; --dim:#9CA3B0; --faint:#6B7280;
+  --recovery:#54B79A; --build:#E3A93C; --peak:#F07B3F; --taper:#6E96C9;
+  --race:#E4584E; --bridge:#9B8FD6; --off:#8A8F9C;
+  --disp:'Barlow Condensed',sans-serif; --body:'Barlow',sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding:max(12px,env(safe-area-inset-top)) 14px calc(40px + env(safe-area-inset-bottom));max-width:760px;margin:0 auto}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+button:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--taper);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+header{padding:10px 2px 14px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--race);text-transform:uppercase}
+h1{font-family:var(--disp);font-weight:700;font-size:44px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;margin:4px 0 2px}
+h1 .thin{color:var(--dim);font-weight:600}
+.sub{color:var(--dim);font-size:14px;max-width:46ch}
+.counters{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.counter{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-width:104px}
+.counter b{display:block;font-family:var(--mono);font-size:20px;font-weight:500;line-height:1.2}
+.counter span{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.counter.hot{border-color:var(--race)}
+.counter.hot b{color:var(--race)}
+
+.ribbonwrap{margin:18px -14px 6px;padding:0 14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ribbon{min-width:660px}
+.ribbon svg{display:block;width:100%;height:auto}
+.rlegend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 2px 4px;font-size:12px;color:var(--dim)}
+.rlegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
+
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}
+h2{font-family:var(--disp);font-weight:600;font-size:22px;text-transform:uppercase;letter-spacing:.05em}
+.todaybtn{font-size:13px;font-weight:600;color:var(--build);border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:var(--card)}
+
+.week{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.week[data-open="true"]{background:var(--card2)}
+.week.current{border-color:var(--build);border-left-width:4px;box-shadow:0 0 0 1px var(--build) inset}
+.whead{width:100%;display:flex;align-items:center;gap:12px;padding:13px 14px;text-align:left}
+.wnum{font-family:var(--mono);font-size:12px;color:var(--faint);min-width:32px}
+.wmain{flex:1;min-width:0}
+.wtitle{font-family:var(--disp);font-weight:600;font-size:19px;letter-spacing:.03em;text-transform:uppercase;line-height:1.1}
+.wdates{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.wphase{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.chev{color:var(--faint);font-size:12px;transition:transform .15s}
+.week[data-open="true"] .chev{transform:rotate(180deg)}
+.wbody{display:none;border-top:1px solid var(--line);padding:6px 14px 14px}
+.week[data-open="true"] .wbody{display:block}
+.wfocus{font-size:13.5px;color:var(--dim);padding:8px 2px 10px;border-bottom:1px dashed var(--line)}
+.day{display:flex;gap:11px;padding:10px 2px;border-bottom:1px solid var(--line);align-items:flex-start}
+.day:last-of-type{border-bottom:none}
+.day.today{background:rgba(227,169,60,.07);margin:0 -8px;padding-left:10px;padding-right:10px;border-radius:8px}
+.dd{font-family:var(--mono);font-size:12px;color:var(--dim);min-width:58px;padding-top:2px}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:7px;flex:none}
+.dmain{flex:1}
+.dt{font-weight:600;font-size:15px}
+.dt .chip{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--bg);background:var(--build);border-radius:4px;padding:2px 6px;margin-left:7px;vertical-align:1px}
+.dx{font-size:13.5px;color:var(--dim)}
+.notes{margin-top:12px}
+.notes label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:5px}
+.notes textarea{width:100%;min-height:64px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--body);font-size:14px;padding:9px;resize:vertical}
+.savedtag{font-size:11px;color:var(--recovery);margin-top:4px;min-height:14px;font-family:var(--mono)}
+
+footer{margin-top:26px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+footer b{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">Redemption year &middot; mile 86 is not the end</div>
+  <h1>Sangre <span class="thin">/ 2026</span></h1>
+  <p class="sub">Jul 6 &ndash; Nov 15 &middot; Poconos &rarr; CDMX &rarr; Ragnar Rainier &rarr; Sangre de Cristo 100 &rarr; Rio del Lago 100</p>
+  <div class="counters">
+    <div class="counter hot"><b id="cd-sangre">—</b><span>days to Sangre</span></div>
+    <div class="counter"><b id="cd-rdl">—</b><span>days to RDL</span></div>
+    <div class="counter"><b id="cd-next">—</b><span id="cd-next-label">next event</span></div>
+  </div>
+</header>
+
+<div class="ribbonwrap"><div class="ribbon" id="ribbon"></div></div>
+<div class="rlegend">
+  <span><i style="background:var(--recovery)"></i>Recovery</span>
+  <span><i style="background:var(--build)"></i>Build</span>
+  <span><i style="background:var(--peak)"></i>Peak</span>
+  <span><i style="background:var(--taper)"></i>Taper</span>
+  <span><i style="background:var(--race)"></i>Race</span>
+  <span><i style="background:var(--bridge)"></i>Bridge</span>
+  <span><i style="background:var(--off)"></i>Off</span>
+</div>
+
+<div class="toolbar">
+  <h2>Week by week</h2>
+  <button class="todaybtn" id="jump">Jump to this week</button>
+</div>
+
+<div id="weeks"></div>
+
+<footer>
+  <b>After Nov 15:</b> winter base block — the 2024&ndash;25 / 2025&ndash;26 template. Steady running, climbing 1&ndash;2x/wk, progressive trail longs, no December crater.<br><br>
+  Rules of the plan: races replace long runs, never add to them &middot; HRV below range two mornings in a row = drop the day's quality &middot; the biggest weekend lives five weeks out, not two.
+</footer>
+
+<script>
+const PH = {recovery:'--recovery',build:'--build',peak:'--peak',taper:'--taper',race:'--race',bridge:'--bridge',off:'--off'};
+const W = [
+{n:1,s:'2026-07-06',e:'2026-07-12',ph:'race',t:'Poconos week',load:55,
+ f:'Film the Elite Super, then race the Super. Grip work early, legs fresh by Saturday.',
+ d:[['Mon 7/6','run','Intervals','Done. No second session — HRV below range, sleep is the win.'],
+    ['Tue 7/7','rest','Rest','Full recovery day. Hydrate, early night.'],
+    ['Wed 7/8','climb','Bouldering (AM)','Moderate grades, ~45 min. Last grip session before the race.'],
+    ['Thu 7/9','run','Easy 3–4 mi + strides','10:00–10:30/mi, HR ~140. Finish with 4–6 × 20s strides.'],
+    ['Fri 7/10','travel','Travel DFW → PA','Hydrate aggressively. Optional 15–20 min shakeout after landing.'],
+    ['Sat 7/11','race','SPARTAN POCONOS','Film Elite Super, then race the Super. Eat and drink through the filming shift.','RACE'],
+    ['Sun 7/12','rest','Travel home','Walking only.']]},
+{n:2,s:'2026-07-13',e:'2026-07-19',ph:'recovery',t:'Down week',load:20,
+ f:'Absorb Poconos. Goal: HRV back into the 50s before Build 1 starts.',
+ d:[['Mon 7/13','rest','Rest','Nothing. Sleep.'],
+    ['Tue 7/14','run','Easy 3 mi','Conversational. HR under 140.'],
+    ['Wed 7/15','climb','Climbing (easy)','Volume climbing, no projecting.'],
+    ['Thu 7/16','run','Easy 4 mi','Still easy. Resist pace.'],
+    ['Fri 7/17','rest','Rest','—'],
+    ['Sat 7/18','run','Easy 4 mi + walk','Add a long walk if you feel good.'],
+    ['Sun 7/19','rest','Rest','Check HRV trend. In range → green light for Build 1.']]},
+{n:3,s:'2026-07-20',e:'2026-07-26',ph:'build',t:'Build 1',load:55,
+ f:'Reintroduce quality. First vert session of the block.',
+ d:[['Mon 7/20','climb','Climbing','Normal session.'],
+    ['Tue 7/21','vert','Pack hike 60–75 min','Stairmill or max-incline treadmill with loaded pack. Hiking effort, not running.'],
+    ['Wed 7/22','run','Steady 6 mi','Moderate — upper-easy effort.'],
+    ['Thu 7/23','run','Easy 5 mi','—'],
+    ['Fri 7/24','rest','Rest','—'],
+    ['Sat 7/25','long','Long 16–18 mi trail','Trail surface. Practice race fueling from mile 1.'],
+    ['Sun 7/26','run','Easy 6–8 mi','On tired legs. That is the point.']]},
+{n:4,s:'2026-07-27',e:'2026-08-02',ph:'build',t:'Build 2 + Mexico City',load:60,
+ f:'Quality early, then CDMX. Filming a Beast at 7,300 ft is a free altitude + vert session — count it.',
+ d:[['Mon 7/27','vert','Hill repeats','6 × 90s hard uphill, jog down. Best hill you can find.'],
+    ['Tue 7/28','run','Tempo 20 min','Inside a 6 mi run. Comfortably hard, not a race.'],
+    ['Wed 7/29','run','Easy 4 mi','—'],
+    ['Thu 7/30','travel','Travel prep / easy','Pack. Optional 3 mi shakeout.'],
+    ['Fri 7/31','travel','Fly to Mexico City','Hydrate. Altitude starts working on you tonight.'],
+    ['Sat 8/1','race','SPARTAN LATAM CHAMPS','Film the Beast (that is your vert session). Afternoon Sprint optional if legs say yes. Do NOT re-run the Beast.','FILM'],
+    ['Sun 8/2','rest','Off / travel home','Walking only.']]},
+{n:5,s:'2026-08-03',e:'2026-08-09',ph:'build',t:'Build 3 — biggest home weekend',load:80,
+ f:'Back-to-back weekend plus the first deliberate night session.',
+ d:[['Mon 8/3','rest','Rest','Recover from travel.'],
+    ['Tue 8/4','vert','Pack hike 75 min','Loaded pack, stairmill or incline.'],
+    ['Wed 8/5','run','Easy 5 mi','—'],
+    ['Thu 8/6','night','Night run — 2–3 AM start','3–4 hrs easy. Practice headlamp, fueling, and moving while sleepy. This is mile-86 rehearsal.'],
+    ['Fri 8/7','rest','Rest','—'],
+    ['Sat 8/8','long','Long 20–22 mi trail','Race fueling: 250–300 cal/hr. Log what your stomach tolerates.'],
+    ['Sun 8/9','long','10–12 mi tired legs','Slow is fine. Time on feet.']]},
+{n:6,s:'2026-08-10',e:'2026-08-16',ph:'build',t:'Build 4 — pre-Ragnar',load:65,
+ f:'Slightly reduced. Freshening for Ragnar, not resting.',
+ d:[['Mon 8/10','climb','Climbing','—'],
+    ['Tue 8/11','vert','Vert session','Pack hike or hill repeats, 60 min.'],
+    ['Wed 8/12','run','Easy 5 mi','—'],
+    ['Thu 8/13','night','Night run #2 (if #1 missed)','Otherwise easy 4 mi.'],
+    ['Fri 8/14','rest','Rest','—'],
+    ['Sat 8/15','long','Moderate 14–16 mi','Trail. Controlled effort.'],
+    ['Sun 8/16','run','Easy 5 mi','—']]},
+{n:7,s:'2026-08-17',e:'2026-08-23',ph:'peak',t:'Ragnar Rainier — peak weekend',load:95,
+ f:'The centerpiece. ~50K over two days on Rainier trails = full Sangre dress rehearsal, five weeks out.',
+ d:[['Mon 8/17','run','Easy 4 mi','—'],
+    ['Tue 8/18','run','3 mi + strides','Stay sharp.'],
+    ['Wed 8/19','rest','Rest / pack','Race shoes, poles, race nutrition, between-leg recovery kit.'],
+    ['Thu 8/20','travel','Travel to Rainier','—'],
+    ['Fri 8/21','race','RAGNAR BLACK LOOP — DAY 1','Race fueling 250–300 cal/hr. Treat between-leg downtime as night-two rehearsal: eat, warm, reset.','RACE'],
+    ['Sat 8/22','race','RAGNAR BLACK LOOP — DAY 2','Run tired. This is the whole point of the weekend.','RACE'],
+    ['Sun 8/23','travel','Travel home','Walk in the airport. Compression on the flight.']]},
+{n:8,s:'2026-08-24',e:'2026-08-30',ph:'recovery',t:'Absorb Ragnar',load:40,
+ f:'Easy week. No 30-miler this year — Ragnar took that slot, and that is the fix from last year.',
+ d:[['Mon 8/24','rest','Rest','—'],
+    ['Tue 8/25','run','Easy 3–4 mi','—'],
+    ['Wed 8/26','climb','Climbing (easy)','—'],
+    ['Thu 8/27','run','Easy 5 mi','—'],
+    ['Fri 8/28','rest','Rest','—'],
+    ['Sat 8/29','long','Optional Cleburne 16–18 mi','Only if legs are genuinely back. Tradition, not obligation.'],
+    ['Sun 8/30','rest','Rest / walk','—']]},
+{n:9,s:'2026-08-31',e:'2026-09-06',ph:'build',t:'Last quality week',load:70,
+ f:'Final touches. After this weekend, the hay is in the barn.',
+ d:[['Mon 8/31','rest','Rest','—'],
+    ['Tue 9/1','vert','Vert session','Pack hike 60–70 min.'],
+    ['Wed 9/2','run','Easy 4 mi','—'],
+    ['Thu 9/3','run','Tempo 20 min','Inside 5–6 mi.'],
+    ['Fri 9/4','rest','Rest','—'],
+    ['Sat 9/5','long','Final long ~20 mi trail','Race-effort hiking on every climb. Full race nutrition rehearsal.'],
+    ['Sun 9/6','run','Short easy 4–5 mi','—']]},
+{n:10,s:'2026-09-07',e:'2026-09-13',ph:'taper',t:'Taper 1 (−35%)',load:45,
+ f:'Volume drops. Nothing over 12 miles. Start eating the race-day nutrition plan in training.',
+ d:[['Mon 9/7','rest','Rest','—'],
+    ['Tue 9/8','run','Easy 5 mi + hill strides','6 × 20s uphill, walk down.'],
+    ['Wed 9/9','climb','Climbing (light)','Last normal climbing session before the race.'],
+    ['Thu 9/10','run','Easy 5 mi','—'],
+    ['Fri 9/11','rest','Rest','—'],
+    ['Sat 9/12','long','10–12 mi trail','Comfortable. Test final gear choices.'],
+    ['Sun 9/13','rest','Rest','—']]},
+{n:11,s:'2026-09-14',e:'2026-09-20',ph:'taper',t:'Taper 2 (−55%) + Seattle',load:30,
+ f:'Seattle Beast filming is the week\u2019s long effort — hike mode ONLY. No bib. No obstacles.',
+ d:[['Mon 9/14','run','Easy 4 mi','—'],
+    ['Tue 9/15','run','Easy 4 mi + strides','—'],
+    ['Wed 9/16','rest','Rest','—'],
+    ['Thu 9/17','travel','Fly to Seattle','Hydrate. Comfortable shoes packed for filming.'],
+    ['Fri 9/18','rest','Rest / scout','Easy walking only.'],
+    ['Sat 9/19','race','SPARTAN NA CHAMPS','Film the Beast as a long HIKE. Low HR, aggressive hydration, fly home promptly.','FILM'],
+    ['Sun 9/20','travel','Travel home','Feet up.']]},
+{n:12,s:'2026-09-21',e:'2026-09-27',ph:'race',t:'SANGRE DE CRISTO 100',load:100,
+ f:'Race won in transition efficiency, hiking economy, and refusing to sit down during night two. HR was never the problem.',
+ d:[['Mon 9/21','run','Shakeout 20 min + strides','—'],
+    ['Tue 9/22','rest','Rest','Sleep bank deposits start now.'],
+    ['Wed 9/23','run','Shakeout 20 min','—'],
+    ['Thu 9/24','travel','Fly in tonight','Land, hydrate, sleep. You beat the day-3 altitude trough by racing inside 48 hrs.'],
+    ['Fri 9/25','run','Shakeout 2–3 mi @ Westcliffe','Conversational. Then: drop bags (warm layers high), caffeine plan for 2–6 AM, poles ready.'],
+    ['Sat 9/26','race','SANGRE 100 — GO','Hike the climbs from mile 1. In-and-out of aid stations. 250–300 cal/hr.','RACE'],
+    ['Sun 9/27','race','SANGRE 100 — NIGHT TWO','Do not sit. Layers on before you are cold. Caffeine on schedule. Mile 86 is where you take it back.','RACE']]},
+{n:13,s:'2026-09-28',e:'2026-10-04',ph:'recovery',t:'Recovery 1',load:8,
+ f:'Zero running. Walks and pool only.',
+ d:[['Mon 9/28','rest','Nothing','Eat. Sleep. Celebrate or process — either way, rest.'],
+    ['Tue 9/29','rest','Walk 20–30 min','—'],
+    ['Wed 9/30','rest','Walk / swim','—'],
+    ['Thu 10/1','rest','Walk','—'],
+    ['Fri 10/2','rest','Rest','—'],
+    ['Sat 10/3','rest','Walk / swim','—'],
+    ['Sun 10/4','rest','Rest','—']]},
+{n:14,s:'2026-10-05',e:'2026-10-11',ph:'recovery',t:'Recovery 2',load:15,
+ f:'Short easy jogs only once HRV is back in range.',
+ d:[['Mon 10/5','rest','Rest','—'],
+    ['Tue 10/6','run','Jog 2–3 mi (if HRV normal)','Truly easy.'],
+    ['Wed 10/7','rest','Walk','—'],
+    ['Thu 10/8','run','Jog 3 mi','—'],
+    ['Fri 10/9','rest','Rest','—'],
+    ['Sat 10/10','run','Easy 4 mi','—'],
+    ['Sun 10/11','climb','Climbing (easy)','Reintroduce gently.']]},
+{n:15,s:'2026-10-12',e:'2026-10-18',ph:'bridge',t:'Blue Mountain (film only)',load:30,
+ f:'A hilly hike 3 weeks post-100 and 3 weeks pre-RDL is ideal active recovery. Do not race Palmerton rock.',
+ d:[['Mon 10/12','run','Easy 4 mi','—'],
+    ['Tue 10/13','run','Easy 5 mi','—'],
+    ['Wed 10/14','rest','Rest','—'],
+    ['Thu 10/15','travel','Fly to PA','—'],
+    ['Fri 10/16','rest','Rest / scout','—'],
+    ['Sat 10/17','race','SPARTAN BLUE MOUNTAIN','Film the elite Beast. Hiking only — cooked legs get hurt on that rock.','FILM'],
+    ['Sun 10/18','travel','Travel home','—']]},
+{n:16,s:'2026-10-19',e:'2026-10-25',ph:'bridge',t:'RDL bridge 1 — decision week',load:40,
+ f:'If Sangre went sideways, the RDL call is made THIS week, with data, not on the start line.',
+ d:[['Mon 10/19','rest','Rest','—'],
+    ['Tue 10/20','run','Easy 5 mi','—'],
+    ['Wed 10/21','climb','Climbing','—'],
+    ['Thu 10/22','run','Easy 6 mi','—'],
+    ['Fri 10/23','rest','Rest','—'],
+    ['Sat 10/24','long','Moderate 14–16 mi','Easy-moderate. This carries you to RDL.'],
+    ['Sun 10/25','run','Easy 4 mi','—']]},
+{n:17,s:'2026-10-26',e:'2026-11-01',ph:'bridge',t:'RDL bridge 2',load:35,
+ f:'Consistency, nothing ambitious. Sangre fitness carries this race.',
+ d:[['Mon 10/26','rest','Rest','—'],
+    ['Tue 10/27','run','Easy 5 mi','—'],
+    ['Wed 10/28','run','Easy 5 mi + strides','—'],
+    ['Thu 10/29','climb','Climbing (light)','—'],
+    ['Fri 10/30','rest','Rest','—'],
+    ['Sat 10/31','run','Easy 8–10 mi','—'],
+    ['Sun 11/1','rest','Rest','—']]},
+{n:18,s:'2026-11-02',e:'2026-11-08',ph:'race',t:'RIO DEL LAGO 100',load:90,
+ f:'The victory lap. Run by HR, hike climbs early, enjoy the American River and your friend at the finish.',
+ d:[['Mon 11/2','run','Shakeout 20 min','—'],
+    ['Tue 11/3','rest','Rest','—'],
+    ['Wed 11/4','run','Shakeout 20 min + strides','—'],
+    ['Thu 11/5','travel','Fly to Sacramento','—'],
+    ['Fri 11/6','rest','Rest / packet pickup','Feet up. Bags set.'],
+    ['Sat 11/7','race','RIO DEL LAGO — GO','HR-capped all day. Runnable course, generous cutoffs — let it come to you.','RACE'],
+    ['Sun 11/8','race','RIO DEL LAGO — FINISH','Then straight to vacation mode.','RACE']]},
+{n:19,s:'2026-11-09',e:'2026-11-15',ph:'off',t:'Cancun → Savage',load:10,
+ f:'Full off week in Cancun — the structured off-ramp that prevents the December crater. Then Savage on the way home.',
+ d:[['Mon 11/9','rest','Cancun','Swim. Walk. Nothing else.'],
+    ['Tue 11/10','rest','Cancun','—'],
+    ['Wed 11/11','rest','Cancun','—'],
+    ['Thu 11/12','rest','Cancun','—'],
+    ['Fri 11/13','travel','Fly to Florida','—'],
+    ['Sat 11/14','race','SAVAGE RACE FL','Film the elites — strictly walking, six days post-100.','FILM'],
+    ['Sun 11/15','travel','Home','Winter base block starts next week.']]}
+];
+const DOTC={run:'--taper',vert:'--peak',climb:'--bridge',rest:'--off',race:'--race',travel:'--off',night:'--build',long:'--build'};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const dayMS=86400000;
+function pdate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
+const today=new Date();today.setHours(0,0,0,0);
+function daysTo(s){return Math.ceil((pdate(s)-today)/dayMS);}
+
+(function counters(){
+  const s=daysTo('2026-09-26'),r=daysTo('2026-11-07');
+  document.getElementById('cd-sangre').textContent=s>0?s:(s>=-1?'GO':'done');
+  document.getElementById('cd-rdl').textContent=r>0?r:(r>=-1?'GO':'done');
+  const ev=[['2026-07-11','Poconos'],['2026-08-01','CDMX'],['2026-08-21','Ragnar'],['2026-09-19','Seattle'],['2026-09-26','Sangre'],['2026-10-17','Blue Mtn'],['2026-11-07','RDL'],['2026-11-14','Savage']];
+  const nx=ev.find(e=>daysTo(e[0])>=0);
+  if(nx){document.getElementById('cd-next').textContent=daysTo(nx[0]);document.getElementById('cd-next-label').textContent=nx[1];}
+  else{document.getElementById('cd-next').textContent='—';document.getElementById('cd-next-label').textContent='season done';}
+})();
+
+function curWeekIdx(){
+  for(let i=0;i<W.length;i++){if(today>=pdate(W[i].s)&&today<=pdate(W[i].e))return i;}
+  return today<pdate(W[0].s)?0:W.length-1;
+}
+const CUR=curWeekIdx();
+
+(function ribbon(){
+  const n=W.length,bw=660/n,h=120,base=100;
+  let bars='',flags='';
+  W.forEach((w,i)=>{
+    const x=i*bw,bh=w.load*0.78,y=base-bh,c=css(PH[w.ph]);
+    bars+=`<rect x="${x+2}" y="${y}" width="${bw-4}" height="${bh}" rx="2" fill="${c}" opacity="${i===CUR?1:0.75}"/>`;
+    if(w.ph==='race'||w.ph==='peak'){
+      flags+=`<line x1="${x+bw/2}" y1="${y}" x2="${x+bw/2}" y2="${y-13}" stroke="${css('--text')}" stroke-width="1.5"/>`+
+             `<path d="M ${x+bw/2} ${y-13} l 9 3.5 l -9 3.5 z" fill="${css('--race')}"/>`;
+    }
+    if(i===CUR){bars+=`<circle cx="${x+bw/2}" cy="${base+9}" r="3.5" fill="${css('--build')}"/>`;}
+    bars+=`<rect x="${x}" y="0" width="${bw}" height="${h}" fill="transparent" style="cursor:pointer" data-w="${i}"><title>W${w.n} — ${w.t}</title></rect>`;
+  });
+  document.getElementById('ribbon').innerHTML=
+    `<svg viewBox="0 0 660 ${h}" role="img" aria-label="Training load by week, July through November. Peaks at Ragnar week 7 and Sangre race week 12. Flags mark race and peak weeks.">
+     <line x1="0" y1="${base}" x2="660" y2="${base}" stroke="${css('--line')}" stroke-width="1"/>${bars}${flags}</svg>`;
+  document.getElementById('ribbon').addEventListener('click',e=>{
+    const t=e.target.closest('[data-w]');if(!t)return;
+    openWeek(+t.dataset.w,true);
+  });
+})();
+
+let store={};
+function loadNotes(){try{store=JSON.parse(localStorage.getItem('sangre26-notes')||'{}');}catch(e){store={};}}
+function saveNote(i,val,tag){
+  store['w'+i]=val;
+  try{localStorage.setItem('sangre26-notes',JSON.stringify(store));tag.textContent='saved';}
+  catch(e){tag.textContent='saved for this session only (storage unavailable here)';}
+  clearTimeout(tag._t);tag._t=setTimeout(()=>tag.textContent='',2200);
+}
+loadNotes();
+
+(function build(){
+  const root=document.getElementById('weeks');
+  W.forEach((w,i)=>{
+    const c=css(PH[w.ph]);
+    const el=document.createElement('section');
+    el.className='week'+(i===CUR?' current':'');
+    el.style.borderLeftColor=c;
+    el.dataset.open=(i===CUR);
+    el.id='week'+i;
+    const days=w.d.map(d=>{
+      const dDate=d[0].split(' ')[1],[dm,dd]=dDate.split('/').map(Number);
+      const isToday=(today.getMonth()+1===dm&&today.getDate()===dd&&today.getFullYear()===2026);
+      const chip=d[4]?`<span class="chip">${d[4]}</span>`:'';
+      return `<div class="day${isToday?' today':''}"><span class="dd">${d[0]}</span>`+
+        `<span class="dot" style="background:var(${DOTC[d[1]]})"></span>`+
+        `<div class="dmain"><div class="dt">${d[2]}${chip}</div><div class="dx">${d[3]}</div></div></div>`;
+    }).join('');
+    el.innerHTML=
+      `<button class="whead" aria-expanded="${i===CUR}" aria-controls="wb${i}">`+
+      `<span class="wnum">W${w.n}</span>`+
+      `<span class="wmain"><span class="wtitle">${w.t}</span><br><span class="wdates">${fmt(w.s)} – ${fmt(w.e)}</span></span>`+
+      `<span class="wphase" style="color:${c};border:1px solid ${c}">${w.ph}</span>`+
+      `<span class="chev">▼</span></button>`+
+      `<div class="wbody" id="wb${i}"><div class="wfocus">${w.f}</div>${days}`+
+      `<div class="notes"><label for="nt${i}">Log — how it actually went</label>`+
+      `<textarea id="nt${i}" placeholder="HRV trend, how the legs felt, anything to adjust…">${store['w'+i]||''}</textarea>`+
+      `<div class="savedtag" id="tag${i}"></div></div></div>`;
+    root.appendChild(el);
+    el.querySelector('.whead').addEventListener('click',()=>toggle(i));
+    const ta=el.querySelector('textarea');
+    ta.addEventListener('input',()=>saveNote(i,ta.value,document.getElementById('tag'+i)));
+  });
+})();
+
+function fmt(s){const d=pdate(s);return['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getDate();}
+function toggle(i){
+  const el=document.getElementById('week'+i);
+  const open=el.dataset.open==='true';
+  el.dataset.open=!open;
+  el.querySelector('.whead').setAttribute('aria-expanded',String(!open));
+}
+function openWeek(i,scroll){
+  const el=document.getElementById('week'+i);
+  el.dataset.open='true';
+  el.querySelector('.whead').setAttribute('aria-expanded','true');
+  if(scroll)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('jump').addEventListener('click',()=>openWeek(CUR,true));
+window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR);if(el)el.scrollIntoView({block:'center'});});
+</script>
+</body>
+</html>
