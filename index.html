@@ -34,9 +34,9 @@ h1{font-family:var(--disp);font-weight:700;font-size:44px;line-height:.95;letter
 h1 .thin{color:var(--dim);font-weight:600}
 .sub{color:var(--dim);font-size:14px;max-width:46ch}
 .counters{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.counter{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-width:104px}
-.counter b{display:block;font-family:var(--mono);font-size:20px;font-weight:500;line-height:1.2}
-.counter span{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.counter{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 9px;flex:1 1 0;min-width:0}
+.counter b{display:block;font-family:var(--mono);font-size:19px;font-weight:500;line-height:1.2}
+.counter span{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
 .counter.hot{border-color:var(--race)}
 .counter.hot b{color:var(--race)}
 #ready{margin-top:8px}
@@ -94,8 +94,8 @@ footer b{color:var(--dim)}
   <h1>Sangre <span class="thin">/ 2026</span></h1>
   <p class="sub">Jul 6 &ndash; Nov 15 &middot; Poconos &rarr; CDMX &rarr; Ragnar Rainier &rarr; Sangre de Cristo 100 &rarr; Rio del Lago 100</p>
   <div class="counters">
-    <div class="counter hot"><b id="cd-sangre">—</b><span>days to Sangre</span></div>
-    <div class="counter"><b id="cd-rdl">—</b><span>days to RDL</span></div>
+    <div class="counter hot"><b id="cd-sangre">—</b><span>to Sangre</span></div>
+    <div class="counter"><b id="cd-rdl">—</b><span>to RDL</span></div>
     <div class="counter"><b id="cd-next">—</b><span id="cd-next-label">next event</span></div>
   </div>
   <div class="counters" id="ready" aria-label="Morning readiness from Coros"></div>
