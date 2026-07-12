@@ -81,7 +81,7 @@ h2{font-family:var(--disp);font-weight:600;font-size:22px;text-transform:upperca
 .notes{margin-top:12px}
 .notes label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:5px}
 .notes textarea{width:100%;min-height:64px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--body);font-size:14px;padding:9px;resize:vertical}
-.savedtag{font-size:11px;color:var(--recovery);margin-top:4px;min-height:14px;font-family:var(--mono)}
+.savedtag{font-size:11px;color:var(--recovery);margin-top:4px;min-height:14px;font-family:var(--mono);cursor:pointer}
 
 footer{margin-top:26px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
 footer b{color:var(--dim)}
@@ -344,15 +344,90 @@ const CUR=curWeekIdx();
   });
 })();
 
-let store={};
-function loadNotes(){try{store=JSON.parse(localStorage.getItem('sangre26-notes')||'{}');}catch(e){store={};}}
-function saveNote(i,val,tag){
-  store['w'+i]=val;
-  try{localStorage.setItem('sangre26-notes',JSON.stringify(store));tag.textContent='saved';}
-  catch(e){tag.textContent='saved for this session only (storage unavailable here)';}
-  clearTimeout(tag._t);tag._t=setTimeout(()=>tag.textContent='',2200);
+/* Notes: shared across devices via notes.json committed to this repo.
+   - Local cache: localStorage 'sangre26-notes-v2' = {w0:{v:text,t:editedMs}}.
+     Migrated once from the legacy 'sangre26-notes' string map; the old key is
+     left untouched as a backup.
+   - Read: notes.json from the site (same-origin), or via the GitHub API when a
+     sync token is set. Merge rule: newest edit per week wins.
+   - Write: debounced commit to notes.json through the GitHub contents API using
+     a fine-grained PAT (Contents read/write, this repo only) pasted once per
+     device into localStorage 'sangre26-sync-token' — never stored in the repo.
+     Without a token, notes still save on-device like before. */
+const NOTES_REPO='jpdupree/TrainingCalendar';
+let notes={},notesSha=null,pushTimer=null,pushBusy=false;
+function loadLocalNotes(){
+  try{
+    const v2=localStorage.getItem('sangre26-notes-v2');
+    if(v2){notes=JSON.parse(v2)||{};return;}
+    const old=JSON.parse(localStorage.getItem('sangre26-notes')||'{}');
+    for(const k in old)if(typeof old[k]==='string'&&old[k])notes[k]={v:old[k],t:1};
+    localStorage.setItem('sangre26-notes-v2',JSON.stringify(notes));
+  }catch(e){notes={};}
 }
-loadNotes();
+function noteText(i){return (notes['w'+i]||{}).v||'';}
+function storeLocal(){try{localStorage.setItem('sangre26-notes-v2',JSON.stringify(notes));return true;}catch(e){return false;}}
+function syncToken(){try{return localStorage.getItem('sangre26-sync-token')||'';}catch(e){return '';}}
+function decodeContent(j){return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));}
+function mergeNotes(remote){
+  let changed=false;
+  for(const k in remote||{}){
+    const r=remote[k],l=notes[k];
+    if(r&&r.v!==undefined&&(!l||(r.t||0)>(l.t||0))){notes[k]=r;changed=true;}
+  }
+  if(!changed)return;
+  storeLocal();
+  document.querySelectorAll('.notes textarea').forEach(ta=>{
+    if(document.activeElement!==ta)ta.value=noteText(+ta.id.slice(2));
+  });
+}
+async function fetchRemoteNotes(){
+  try{
+    if(syncToken()){
+      const r=await fetch('https://api.github.com/repos/'+NOTES_REPO+'/contents/notes.json',
+        {headers:{Authorization:'Bearer '+syncToken(),Accept:'application/vnd.github+json'},cache:'no-store'});
+      if(r.ok){const j=await r.json();notesSha=j.sha;mergeNotes(decodeContent(j).weeks);}
+    }else{
+      const r=await fetch('notes.json?ts='+Date.now(),{cache:'no-store'});
+      if(r.ok)mergeNotes((await r.json()).weeks);
+    }
+  }catch(e){}
+}
+function setTag(tag,msg,sticky){tag.textContent=msg;clearTimeout(tag._t);if(!sticky)tag._t=setTimeout(()=>tag.textContent='',2600);}
+function saveNote(i,val,tag){
+  notes['w'+i]={v:val,t:Date.now()};
+  const ok=storeLocal();
+  if(!syncToken()){setTag(tag,ok?'saved on this device — tap here to sync everywhere':'saved for this session only (storage unavailable)',true);return;}
+  setTag(tag,'saved — syncing…',true);
+  clearTimeout(pushTimer);pushTimer=setTimeout(()=>pushNotes(tag),2000);
+}
+async function pushNotes(tag){
+  if(pushBusy){clearTimeout(pushTimer);pushTimer=setTimeout(()=>pushNotes(tag),1500);return;}
+  pushBusy=true;
+  try{
+    const url='https://api.github.com/repos/'+NOTES_REPO+'/contents/notes.json';
+    const h={Authorization:'Bearer '+syncToken(),Accept:'application/vnd.github+json'};
+    const g=await fetch(url,{headers:h,cache:'no-store'});
+    if(g.ok){const j=await g.json();notesSha=j.sha;try{mergeNotes(decodeContent(j).weeks);}catch(e){}}
+    const body={message:'Update week notes from dashboard',
+      content:btoa(unescape(encodeURIComponent(JSON.stringify({weeks:notes},null,1))))};
+    if(notesSha)body.sha=notesSha;
+    const p=await fetch(url,{method:'PUT',headers:h,body:JSON.stringify(body)});
+    if(!p.ok)throw new Error('HTTP '+p.status);
+    notesSha=(await p.json()).content.sha;
+    setTag(tag,'synced everywhere ✓');
+  }catch(e){setTag(tag,'sync failed ('+e.message+') — saved on this device; tap to retry',true);}
+  pushBusy=false;
+}
+function setupSync(tag){
+  const t=prompt('One-time setup for cross-device notes:\n\nPaste a GitHub fine-grained personal access token with Contents read & write on '+NOTES_REPO+' only.\n(GitHub → Settings → Developer settings → Fine-grained tokens)');
+  if(!t)return;
+  try{localStorage.setItem('sangre26-sync-token',t.trim());}catch(e){setTag(tag,'storage unavailable — cannot keep the token here',true);return;}
+  setTag(tag,'token saved — syncing…',true);
+  fetchRemoteNotes().then(()=>pushNotes(tag));
+}
+loadLocalNotes();
+fetchRemoteNotes();
 
 (function build(){
   const root=document.getElementById('weeks');
@@ -379,12 +454,14 @@ loadNotes();
       `<span class="chev">▼</span></button>`+
       `<div class="wbody" id="wb${i}"><div class="wfocus">${w.f}</div>${days}`+
       `<div class="notes"><label for="nt${i}">Log — how it actually went</label>`+
-      `<textarea id="nt${i}" placeholder="HRV trend, how the legs felt, anything to adjust…">${store['w'+i]||''}</textarea>`+
+      `<textarea id="nt${i}" placeholder="HRV trend, how the legs felt, anything to adjust…">${noteText(i).replace(/</g,'&lt;')}</textarea>`+
       `<div class="savedtag" id="tag${i}"></div></div></div>`;
     root.appendChild(el);
     el.querySelector('.whead').addEventListener('click',()=>toggle(i));
     const ta=el.querySelector('textarea');
-    ta.addEventListener('input',()=>saveNote(i,ta.value,document.getElementById('tag'+i)));
+    const tag=el.querySelector('.savedtag');
+    ta.addEventListener('input',()=>saveNote(i,ta.value,tag));
+    tag.addEventListener('click',()=>syncToken()?pushNotes(tag):setupSync(tag));
   });
 })();
 
