@@ -366,6 +366,7 @@ function loadLocalNotes(){
   }catch(e){notes={};}
 }
 function noteText(i){return (notes['w'+i]||{}).v||'';}
+function fitTa(ta){if(!ta.offsetParent)return;ta.style.height='auto';ta.style.height=Math.max(64,ta.scrollHeight+2)+'px';}
 function storeLocal(){try{localStorage.setItem('sangre26-notes-v2',JSON.stringify(notes));return true;}catch(e){return false;}}
 function syncToken(){try{return localStorage.getItem('sangre26-sync-token')||'';}catch(e){return '';}}
 function decodeContent(j){return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));}
@@ -378,7 +379,7 @@ function mergeNotes(remote){
   if(!changed)return;
   storeLocal();
   document.querySelectorAll('.notes textarea').forEach(ta=>{
-    if(document.activeElement!==ta)ta.value=noteText(+ta.id.slice(2));
+    if(document.activeElement!==ta){ta.value=noteText(+ta.id.slice(2));fitTa(ta);}
   });
 }
 async function fetchRemoteNotes(){
@@ -428,6 +429,8 @@ function setupSync(tag){
 }
 loadLocalNotes();
 fetchRemoteNotes();
+/* Pick up edits made on other devices while this tab sits open */
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)fetchRemoteNotes();});
 
 (function build(){
   const root=document.getElementById('weeks');
@@ -460,8 +463,9 @@ fetchRemoteNotes();
     el.querySelector('.whead').addEventListener('click',()=>toggle(i));
     const ta=el.querySelector('textarea');
     const tag=el.querySelector('.savedtag');
-    ta.addEventListener('input',()=>saveNote(i,ta.value,tag));
+    ta.addEventListener('input',()=>{fitTa(ta);saveNote(i,ta.value,tag);});
     tag.addEventListener('click',()=>syncToken()?pushNotes(tag):setupSync(tag));
+    if(i===CUR)fitTa(ta);
   });
 })();
 
@@ -471,11 +475,13 @@ function toggle(i){
   const open=el.dataset.open==='true';
   el.dataset.open=!open;
   el.querySelector('.whead').setAttribute('aria-expanded',String(!open));
+  if(!open)fitTa(el.querySelector('textarea'));
 }
 function openWeek(i,scroll){
   const el=document.getElementById('week'+i);
   el.dataset.open='true';
   el.querySelector('.whead').setAttribute('aria-expanded','true');
+  fitTa(el.querySelector('textarea'));
   if(scroll)el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 document.getElementById('jump').addEventListener('click',()=>openWeek(CUR,true));
