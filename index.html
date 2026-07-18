@@ -143,7 +143,7 @@ const W = [
     ['Wed 7/15','climb','Climbing (easy)','Done. 47 min, 8 routes to 5.10d, HR 82 — easy volume as prescribed.'],
     ['Thu 7/16','run','Easy 4 mi','Done. 4.5 mi, 10:05/mi, HR 136 — legs almost back to normal, HR feeling really good.'],
     ['Fri 7/17','rest','Rest','—'],
-    ['Sat 7/18','run','Easy 4 mi + walk','Add a long walk if you feel good.'],
+    ['Sat 7/18','run','Easy 4 mi + walk','Done. 5.0 mi, 10:18/mi, HR 135. Add the long walk later if you feel good.'],
     ['Sun 7/19','rest','Rest','Check HRV trend. In range → green light for Build 1.']]},
 {n:3,s:'2026-07-20',e:'2026-07-26',ph:'build',t:'Build 1',load:55,
  f:'Reintroduce quality. First vert session of the block. Deficit window opens: −300–400 kcal on easy/rest days only — quality days eat at maintenance.',
@@ -491,7 +491,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-07-17', hrv:53, lo:45, hi:61, status:'normal', recovery:100};
+const READY = {date:'2026-07-18', hrv:58, lo:45, hi:61, status:'normal', recovery:87};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
