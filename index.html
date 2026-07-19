@@ -491,7 +491,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-07-18', hrv:58, lo:45, hi:61, status:'normal', recovery:87};
+const READY = {date:'2026-07-19', hrv:33, lo:45, hi:61, status:'low', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
