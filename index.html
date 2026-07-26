@@ -153,7 +153,7 @@ const W = [
     ['Thu 7/23','run','Easy 5 mi','Done. 5.1 mi, 10:12/mi, HR 139 + 28-min cooldown walk. Fueled to model: ~2L + 2,300mg sodium during.'],
     ['Fri 7/24','rest','Rest','—'],
     ['Sat 7/25','long','Long 16–18 mi trail','Done. 18.5 mi, 4:03, 1,791 ft, HR 142 — load 601, biggest day since Poconos. Fluid 31 oz/hr (A), sodium 1,330 mg/hr (A−), calories 210/hr (C+ — need a gel every 25 min). Negative split in 90° heat; legs tired, not destroyed.'],
-    ['Sun 7/26','run','Easy 6–8 mi','On tired legs. That is the point.']]},
+    ['Sun 7/26','run','Easy 6–8 mi','Done. 7.2 mi, 10:05/mi, HR 137 — legs tired but moved well. Week 1 of the build complete.']]},
 {n:4,s:'2026-07-27',e:'2026-08-02',ph:'build',t:'Build 2 + Mexico City',load:60,
  f:'Quality early, then CDMX. Filming a Beast at 7,300 ft is a free altitude + vert session — count it. Deficit pauses Thursday: travel + race weekend fully fueled.',
  d:[['Mon 7/27','vert','Hill repeats','6 × 90s hard uphill, jog down. Best hill you can find.'],
@@ -491,7 +491,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-07-25', hrv:56, lo:44, hi:60, status:'normal', recovery:56};
+const READY = {date:'2026-07-26', hrv:35, lo:44, hi:60, status:'below', recovery:34};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
