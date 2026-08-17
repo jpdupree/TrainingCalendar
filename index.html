@@ -82,6 +82,16 @@ h2{font-family:var(--disp);font-weight:600;font-size:22px;text-transform:upperca
 .notes label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:5px}
 .notes textarea{width:100%;min-height:64px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--body);font-size:14px;padding:9px;resize:vertical}
 .savedtag{font-size:11px;color:var(--recovery);margin-top:4px;min-height:14px;font-family:var(--mono);cursor:pointer}
+.packbtn{margin-top:12px;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--display);text-transform:uppercase;letter-spacing:.06em;font-size:15px;padding:9px 12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.packbtn:focus-visible{outline:2px solid var(--build);outline-offset:2px}
+.packbtn .pkcount{font-family:var(--mono);font-size:12px;color:var(--faint);text-transform:none}
+.pack{display:none;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;padding:4px 12px 10px;background:var(--bg)}
+.pack.open{display:block}
+.pack h4{font-family:var(--display);text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:var(--faint);margin:12px 0 4px}
+.pki{display:flex;gap:9px;align-items:flex-start;padding:4px 0}
+.pki input{accent-color:var(--build);width:18px;height:18px;margin-top:1px;flex:none;cursor:pointer}
+.pki label{font-size:14px;cursor:pointer}
+.pki.done label{opacity:.45;text-decoration:line-through}
 
 footer{margin-top:26px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
 footer b{color:var(--dim)}
@@ -432,6 +442,74 @@ fetchRemoteNotes();
 /* Pick up edits made on other devices while this tab sits open */
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)fetchRemoteNotes();});
 
+/* Ragnar packing list — checkbox state is device-local in its own key. */
+const PACK=[
+ ['Run kit',[
+  ['olympus','Altra Olympus + gaiters'],
+  ['longsky','Old Long Skys (camp/backup shoes)'],
+  ['socks','6\u20138 pairs socks (double-sock: 2 per leg + spares)'],
+  ['kits','Shirt + shorts per leg (3 sets)'],
+  ['lamp','Headlamp + backup light + spare batteries'],
+  ['reflect','Reflective vest + blinky tail light (night-leg rules)'],
+  ['warm','Long sleeve + light gloves + beanie (40s\u201350s at night)'],
+  ['rain','Rain shell (or windbreaker + poncho) \u2014 check forecast Thu'],
+  ['buff','Buff, cap, sunglasses'],
+  ['lube','Chapstick + lube']]],
+ ['Fueling',[
+  ['gels','~12 gels \u2014 Huma-heavy, few PF30s'],
+  ['pills','Salt pills: counted container per leg, counts sharpied'],
+  ['lmnt','6\u20138 LMNT packs'],
+  ['vest','Vest + 500 mL flask'],
+  ['cup','Collapsible cup'],
+  ['waffles','Stinger waffles (pre-leg breakfasts)'],
+  ['caff','Caffeine tabs + 2 G Fuel scoops pre-bagged (night rehearsal)'],
+  ['imod','Imodium (reactive day 1; pre-start day 2 only if needed)'],
+  ['psyl','Psyllium \u2014 doses for after the race (cutoff 36h pre-start)']]],
+ ['Electronics',[
+  ['watch','Watch + charging cable'],
+  ['banks','2\u00d7 NB10000 + 2 stubby USB-C cables (bank-swap rehearsal)'],
+  ['shokz','Shokz + spare pair'],
+  ['phone','Phone + ziplocs (rain protection, live-tracking trial)']]],
+ ['Camp / sleep',[
+  ['bag','Sleeping bag + pad'],
+  ['ear','Earplugs + eye mask (daylight naps)'],
+  ['pillow','Small pillow'],
+  ['tooth','Travel toothbrush + paste (night-two morale reset)'],
+  ['wipes','Wet wipes + sunscreen'],
+  ['trash','Trash bag'],
+  ['scale','Bathroom scale, if bag room (weigh-ins)']]]
+];
+const PACKKEY='sangre26-pack-v1';
+const PACKW=W.findIndex(w=>w.n===7);
+function packState(){try{return JSON.parse(localStorage.getItem(PACKKEY)||'{}')||{};}catch(e){return{};}}
+function packSave(st){try{localStorage.setItem(PACKKEY,JSON.stringify(st));}catch(e){}}
+function packCounts(){const st=packState();let t=0,d=0;PACK.forEach(g=>g[1].forEach(it=>{t++;if(st[it[0]])d++;}));return d+'/'+t;}
+function packMarkup(){
+  const st=packState();
+  const groups=PACK.map(g=>'<h4>'+g[0]+'</h4>'+g[1].map(it=>{
+    const on=!!st[it[0]];
+    return '<div class="pki'+(on?' done':'')+'"><input type="checkbox" id="pk-'+it[0]+'" data-pk="'+it[0]+'"'+(on?' checked':'')+'><label for="pk-'+it[0]+'">'+it[1]+'</label></div>';
+  }).join('')).join('');
+  return '<button class="packbtn" type="button" aria-expanded="false" aria-controls="packlist">'+
+    '<span>\uD83C\uDF92 Ragnar packing list</span><span class="pkcount">'+packCounts()+'</span></button>'+
+    '<div class="pack" id="packlist">'+groups+'</div>';
+}
+function wirePack(el){
+  const btn=el.querySelector('.packbtn'),box=el.querySelector('.pack');
+  if(!btn||!box)return;
+  btn.addEventListener('click',()=>{
+    const open=box.classList.toggle('open');
+    btn.setAttribute('aria-expanded',String(open));
+  });
+  box.addEventListener('change',e=>{
+    const cb=e.target.closest('[data-pk]');if(!cb)return;
+    const st=packState();
+    if(cb.checked)st[cb.dataset.pk]=true;else delete st[cb.dataset.pk];
+    packSave(st);
+    cb.closest('.pki').classList.toggle('done',cb.checked);
+    btn.querySelector('.pkcount').textContent=packCounts();
+  });
+}
 (function build(){
   const root=document.getElementById('weeks');
   W.forEach((w,i)=>{
@@ -455,7 +533,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)fetchRemot
       `<span class="wmain"><span class="wtitle">${w.t}</span><br><span class="wdates">${fmt(w.s)} – ${fmt(w.e)}</span></span>`+
       `<span class="wphase" style="color:${c};border:1px solid ${c}">${w.ph}</span>`+
       `<span class="chev">▼</span></button>`+
-      `<div class="wbody" id="wb${i}"><div class="wfocus">${w.f}</div>${days}`+
+      `<div class="wbody" id="wb${i}"><div class="wfocus">${w.f}</div>${days}${i===PACKW?packMarkup():''}`+
       `<div class="notes"><label for="nt${i}">Log — how it actually went</label>`+
       `<textarea id="nt${i}" placeholder="HRV trend, how the legs felt, anything to adjust…">${noteText(i).replace(/</g,'&lt;')}</textarea>`+
       `<div class="savedtag" id="tag${i}"></div></div></div>`;
@@ -465,6 +543,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)fetchRemot
     const tag=el.querySelector('.savedtag');
     ta.addEventListener('input',()=>{fitTa(ta);saveNote(i,ta.value,tag);});
     tag.addEventListener('click',()=>syncToken()?pushNotes(tag):setupSync(tag));
+    if(i===PACKW)wirePack(el);
     if(i===CUR)fitTa(ta);
   });
 })();
