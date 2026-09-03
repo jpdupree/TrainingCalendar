@@ -214,7 +214,7 @@ const W = [
  d:[['Mon 8/31','rest','Rest','—'],
     ['Tue 9/1','vert','Vert session','Done. Trail run instead of pack hike: 4.3 mi, 1:23, 830 ft at HR 135, 5 PM heat. First outing in the new Merrells. Gel + half protein bar + pill on the beeps.'],
     ['Wed 9/2','run','Easy 4 mi','Done. 4.7 mi, 46:37, 9:51/mi, HR 133 — a bit quick for easy on a below-range morning.'],
-    ['Thu 9/3','run','Tempo 20 min','Inside 5–6 mi.'],
+    ['Thu 9/3','run','Tempo 20 min','Done. 6.0 mi total, tempo min 27–47: ~2.3 mi at 8:40/mi avg, HR 139→163 (max 168). Mile 4 8:13, mile 5 8:50 — heat fade. Last quality session before taper.'],
     ['Fri 9/4','rest','Rest','—'],
     ['Sat 9/5','race','SIX-0 CLEBURNE — marathon (2 x 13.1)','Final long, run as rehearsal not race: HR ceiling ~130, hike every climb, full metronome. Honest call at the loop transition — strong = loop 2 as tired-legs practice; anything off = stop at 13.1. Cold brew + Boost on script.','RACE'],
     ['Sun 9/6','run','Short easy 4–5 mi','—']]},
@@ -568,7 +568,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-09-02', hrv:44, lo:46, hi:62, status:'below', recovery:89};
+const READY = {date:'2026-09-03', hrv:46, lo:46, hi:62, status:'normal', recovery:74};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
