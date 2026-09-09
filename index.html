@@ -222,7 +222,7 @@ const W = [
  f:'Volume drops. Nothing over 12 miles. Start eating the race-day nutrition plan in training — GI protocol locked to whatever Ragnar proved.',
  d:[['Mon 9/7','rest','Rest','—'],
     ['Tue 9/8','run','Easy 5 mi + hill strides','Done. Trail instead: 6.0 mi, 1:46, 1,165 ft at HR 126 — hills built in, low and easy. Taper vert without the cost.'],
-    ['Wed 9/9','climb','Climbing (light)','Last normal climbing session before the race.'],
+    ['Wed 9/9','climb','Climbing (light)','Done. 30 min bouldering at HR 87 — exactly the dose. HRV 43 vs 44-58 this morning, so light was the right call.'],
     ['Thu 9/10','run','Easy 5 mi','—'],
     ['Fri 9/11','rest','Rest','—'],
     ['Sat 9/12','long','10–12 mi trail','Comfortable. Test final gear choices.'],
@@ -568,7 +568,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-09-08', hrv:53, lo:45, hi:59, status:'normal', recovery:92};
+const READY = {date:'2026-09-09', hrv:43, lo:44, hi:58, status:'below', recovery:94};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
