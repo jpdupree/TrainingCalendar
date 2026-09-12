@@ -225,7 +225,7 @@ const W = [
     ['Wed 9/9','climb','Climbing (light)','Done. 30 min bouldering at HR 87 — exactly the dose. HRV 43 vs 44-58 this morning, so light was the right call.'],
     ['Thu 9/10','run','Easy 5 mi','Done: 5.0 mi, 46:41, 9:17/mi at HR 145 (best mile 8:01). Ran with friends and let them set the pace — Coros graded it Tempo, anaerobic TE 2.6, on 4h36 of sleep. Taper rule from here: solo pace, own watch. Group runs get skipped or run from the back.'],
     ['Fri 9/11','rest','Rest','Last caffeine day — caffeine-free from Sat 9/12. 20–30 min easy walk (movement is the clear-out trigger, not load) and hydrate hard: 163.5 with a heavy gut, no real BM in days.'],
-    ['Sat 9/12','long','10–12 mi trail','Comfortable. Test final gear choices.'],
+    ['Sat 9/12','long','10–12 mi trail','Done: 11.0 mi, 2:26, 1,059 ft at HR 133 (13:18/mi) in the heat — hard to hold low but everything else felt good. Big gain vs 8/15 (HR 145 at 14:29/mi): faster and 12 beats cheaper. GI: cleared at home, then a stop in the first 2 mi, clean the rest — the backlog moved, but ONE clear-out is not enough.'],
     ['Sun 9/13','rest','Rest','—']]},
 {n:11,s:'2026-09-14',e:'2026-09-20',ph:'taper',t:'Taper 2 (−55%) + Seattle',load:30,
  f:'Seattle Beast filming is the week\u2019s long effort — hike mode ONLY. No bib. No obstacles.',
@@ -568,7 +568,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-09-11', hrv:57, lo:45, hi:59, status:'normal', recovery:100};
+const READY = {date:'2026-09-12', hrv:59, lo:44, hi:58, status:'above', recovery:61};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
