@@ -229,7 +229,7 @@ const W = [
     ['Sun 9/13','rest','Rest','—']]},
 {n:11,s:'2026-09-14',e:'2026-09-20',ph:'taper',t:'Taper 2 (−55%) + Seattle',load:30,
  f:'Seattle Beast filming is the week\u2019s long effort — hike mode ONLY. No bib. No obstacles. Runs move to EVENING to protect sleep (bedtimes are fine; early alarms were the problem) — except Tue, leading a group run. Evening also rehearses Sangre hours 12–20.',
- d:[['Mon 9/14','run','Easy 4 mi (evening)','No alarm. HR ≤130. HRV 43 below range two mornings running — cause is bedtime, not load: asleep 02:26 Sat night and 00:20 Sun night vs a 22:00 norm. Recovery 100%, so nothing to cut. Lights out by 22:30 tonight is the actual prescription.'],
+ d:[['Mon 9/14','run','Easy 4 mi (evening)','Done, textbook: 4.0 mi, 51:13, 12:46/mi at HR 126 — four beats under the ceiling, anaerobic TE 0.0, load 65. (Coros said "Performance: Poor" — that means well below capability, which IS the target on a taper day.) Plus a 34-min nap at 11:40, the right repair for a 5h57 night with an hour awake. HRV 43 below range two mornings — cause was bedtime (asleep 02:26 then 00:20 vs a 22:00 norm), not load.'],
     ['Tue 9/15','run','Easy 4 mi + strides','Early — leading a group run. You set the pace: HR ≤130, strides at the end. ALSO the order deadline for drop-bag supplies (salt pills, LMNT, Boost, sunscreen, wipes).'],
     ['Wed 9/16','rest','Rest','—'],
     ['Thu 9/17','travel','Fly to Seattle','Hydrate. Comfortable shoes packed for filming.'],
@@ -568,7 +568,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-09-14', hrv:43, lo:46, hi:58, status:'below', recovery:100};
+const READY = {date:'2026-09-14', hrv:43, lo:46, hi:58, status:'below', recovery:97};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
