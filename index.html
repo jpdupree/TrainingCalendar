@@ -231,7 +231,7 @@ const W = [
  f:'Seattle Beast filming is the week\u2019s long effort — hike mode ONLY. No bib. No obstacles. Runs move to EVENING to protect sleep (bedtimes are fine; early alarms were the problem) — except Tue, leading a group run. Evening also rehearses Sangre hours 12–20.',
  d:[['Mon 9/14','run','Easy 4 mi (evening)','Done, textbook: 4.0 mi, 51:13, 12:46/mi at HR 126 — four beats under the ceiling, anaerobic TE 0.0, load 65. (Coros said "Performance: Poor" — that means well below capability, which IS the target on a taper day.) Plus a 34-min nap at 11:40, the right repair for a 5h57 night with an hour awake. HRV 43 below range two mornings — cause was bedtime (asleep 02:26 then 00:20 vs a 22:00 norm), not load.'],
     ['Tue 9/15','run','Easy 4 mi + strides','Done: 5.4 mi total, avg HR 124. Body 4.48 mi at 11:11/mi, HR 127. Six strides, four lapped: 6:31, 6:33, 6:31, then 6:10/mi — fastest last, cadence 189→193, no fade. HR peaks 139–147, recoveries 60s. Bedtime fix worked: asleep 21:03, sleep score 93, HRV back in range at 45.'],
-    ['Wed 9/16','rest','Rest','—'],
+    ['Wed 9/16','rest','Rest','No alarm paid off: 9h16 sleep (22:10–07:50), longest of the log, 22% deep ≈ 2 hrs. HRV back to mid-range at 54. Recovery 100%.'],
     ['Thu 9/17','run','Easy 5–6 mi','Flight moved to Fri evening. 60–75 min, HR ≤130. Nothing else — rehearsal dropped: metronome discipline is already proven (Ragnar, Six-0), race gels are not for spending on taper runs, and two 1-hr runs this week with zero bathroom need already answered the jog question at this distance. Only ask: weigh naked before and immediately after, no food/fluid between — the 1.3–1.4 L/hr sweat model rests on a single 8/15 measurement. Also the day to build drop bags.'],
     ['Fri 9/18','travel','Rest → fly to Seattle (evening)','Easy walking only. Hydrate. Comfortable shoes packed for filming.'],
     ['Sat 9/19','race','SPARTAN NA CHAMPS','Film the Beast as a long HIKE. Low HR, aggressive hydration, fly home promptly.','FILM'],
@@ -568,7 +568,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-09-15', hrv:45, lo:45, hi:59, status:'normal', recovery:100};
+const READY = {date:'2026-09-16', hrv:54, lo:44, hi:58, status:'normal', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
