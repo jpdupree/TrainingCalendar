@@ -234,11 +234,11 @@ const W = [
     ['Wed 9/16','rest','Rest','No alarm paid off: 9h16 sleep (22:10–07:50), longest of the log, 22% deep ≈ 2 hrs. HRV back to mid-range at 54. Recovery 100%.'],
     ['Thu 9/17','run','Easy 5–6 mi','Done: 6.5 mi, 1:15:58, 11:40/mi at HR 126, anaerobic TE 0.0. SWEAT TEST: 168.0 (body+bladder) → 163.4 = 4.6 lb = 2.09 L over 1.27 hr = 1.65 L/hr, above the 1.3–1.4 model. Drank 1.24 L/hr and still finished 1.15 lb down. Warm-band 22 oz/hr is a FLOOR, not a ceiling — drink to need, let pills follow volume.'],
     ['Fri 9/18','travel','Rest → fly to Seattle (evening)','Easy walking only. Hydrate. Comfortable shoes packed for filming.'],
-    ['Sat 9/19','race','SPARTAN NA CHAMPS','Film the Beast as a long HIKE. Low HR, aggressive hydration, fly home promptly.','FILM'],
+    ['Sat 9/19','race','SPARTAN NA CHAMPS','Done — and it became a workout, as chasing elites does. 8.4 mi, 2:20, 495 ft, avg HR 128, but moving pace 6:49/km vs 10:26 average (≈49 min near-stationary), best km 8:12/mi. ANAEROBIC TE 4.8 (vs 1.2 on the 9/12 long run), load 288. Absorbable at 7 days out, not at 2. Cart ride paused on the watch — good record.','FILM'],
     ['Sun 9/20','travel','Travel home','Feet up.']]},
 {n:12,s:'2026-09-21',e:'2026-09-27',ph:'race',t:'SANGRE DE CRISTO 100',load:100,
  f:'Race won in transition efficiency, hiking economy, and refusing to sit down during night two. HR was never the problem.',
- d:[['Mon 9/21','run','Shakeout 20 min + strides','—'],
+ d:[['Mon 9/21','run','Shakeout 20 min (no strides)','Strides dropped — Seattle delivered anaerobic TE 4.8, so the neuromuscular sharpness is already banked. Twenty easy minutes, nothing more.'],
     ['Tue 9/22','rest','Rest','Sleep bank deposits start now.'],
     ['Wed 9/23','run','Shakeout 20 min','—'],
     ['Thu 9/24','travel','Fly in tonight','Land, hydrate, sleep. You beat the day-3 altitude trough by racing inside 48 hrs.'],
@@ -568,7 +568,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-09-18', hrv:47, lo:44, hi:58, status:'normal', recovery:99};
+const READY = {date:'2026-09-19', hrv:45, lo:44, hi:58, status:'normal', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
