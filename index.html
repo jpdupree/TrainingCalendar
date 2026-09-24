@@ -241,7 +241,7 @@ const W = [
  d:[['Mon 9/21','run','Shakeout 20 min (no strides)','Done: 2.1 mi, 23:11, 11:17/mi at HR 128, anaerobic TE 0.0, load 32. Exactly the assignment. First sleep deposit: 9h01 (22:30–07:45), 27% REM. Strides were dropped because Seattle delivered anaerobic TE 4.8 — sharpness already banked.'],
     ['Tue 9/22','rest','Rest','Sleep bank deposits start now. Two banked: 9h01 then 7h54 (score 94). HRV 48, recovery 100%. Drop bags now Music Meadows + Horn Creek ONLY — no Venable bag this year.'],
     ['Wed 9/23','run','Shakeout 20 min','Done: 1.9 mi, 20:18, 10:39/mi at HR 125 — lowest HR of the block, anaerobic TE 0.0, load 25. Coros graded it RECOVERY, the first time all season. Last training run before Sangre. HRV 52 (above baseline 51), recovery 100%, three nights banked: 9h01 / 8h59 / 8h14.'],
-    ['Thu 9/24','travel','Fly in tonight','Land, hydrate, sleep. You beat the day-3 altitude trough by racing inside 48 hrs.'],
+    ['Thu 9/24','travel','Fly in tonight','Land, hydrate, sleep. You beat the day-3 altitude trough by racing inside 48 hrs. Last sea-level baseline: HRV 47 normal, recovery 100%, 7h52 sleep (score 86). Four nights banked: 9h01 / 8h59 / 8h14 / 7h52. Low-residue starts tomorrow.'],
     ['Fri 9/25','run','Shakeout 2–3 mi @ Westcliffe','Conversational. Then: drop bags (warm layers high), caffeine plan for 2–6 AM, poles ready.'],
     ['Sat 9/26','race','SANGRE 100 — GO','Hike the climbs from mile 1. In-and-out of aid stations. 250–300 cal/hr.','RACE'],
     ['Sun 9/27','race','SANGRE 100 — NIGHT TWO','Do not sit. Layers on before you are cold. Caffeine on schedule. Mile 86 is where you take it back.','RACE']]},
@@ -568,7 +568,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-09-23', hrv:52, lo:44, hi:58, status:'normal', recovery:100};
+const READY = {date:'2026-09-24', hrv:47, lo:44, hi:58, status:'normal', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
