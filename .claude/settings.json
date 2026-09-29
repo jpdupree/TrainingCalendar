@@ -6,6 +6,8 @@
       "mcp__Coros__querySportRecords",
       "mcp__Coros__getActivityDetail",
       "mcp__Coros__querySleepOverview",
+      "mcp__Coros__queryTrainingSchedule",
+      "mcp__Coros__createScheduledWorkout",
       "Bash(TZ=America/Chicago date *)",
       "Bash(node .claude/check.js)",
       "Edit(index.html)",
