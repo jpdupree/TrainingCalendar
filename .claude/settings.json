@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Coros__querySleepHrv",
+      "mcp__Coros__queryRecoveryStatus",
+      "mcp__Coros__querySportRecords",
+      "mcp__Coros__getActivityDetail",
+      "mcp__Coros__querySleepOverview",
+      "Bash(TZ=America/Chicago date *)",
+      "Bash(node .claude/check.js)",
+      "Edit(index.html)",
+      "Bash(git add index.html)",
+      "Bash(git commit -m *)",
+      "Bash(git push -u origin claude/github-pages-setup-6a4zbw)",
+      "Bash(git push origin HEAD:main)"
+    ]
+  }
+}
