@@ -95,6 +95,8 @@ h2{font-family:var(--disp);font-weight:600;font-size:22px;text-transform:upperca
 
 footer{margin-top:26px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
 footer b{color:var(--dim)}
+.syncbtn{margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--card);cursor:pointer}
+.syncbtn:focus-visible{outline:2px solid var(--build);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -131,7 +133,9 @@ footer b{color:var(--dim)}
 
 <footer>
   <b>After Nov 15:</b> winter base block — the 2024&ndash;25 / 2025&ndash;26 template. Steady running, climbing 1&ndash;2x/wk, progressive trail longs, no December crater.<br><br>
-  Rules of the plan: races replace long runs, never add to them &middot; HRV below range two mornings in a row = drop the day's quality &middot; the biggest weekend lives five weeks out, not two.
+  Rules of the plan: races replace long runs, never add to them &middot; HRV below range two mornings in a row = drop the day's quality &middot; the biggest weekend lives five weeks out, not two.<br>
+  <button class="syncbtn" id="syncbtn" type="button">Notes sync</button>
+  <div class="savedtag" id="synctag" aria-live="polite"></div>
 </footer>
 
 <script>
@@ -379,7 +383,8 @@ function noteText(i){return (notes['w'+i]||{}).v||'';}
 function fitTa(ta){if(!ta.offsetParent)return;ta.style.height='auto';ta.style.height=Math.max(64,ta.scrollHeight+2)+'px';}
 function storeLocal(){try{localStorage.setItem('sangre26-notes-v2',JSON.stringify(notes));return true;}catch(e){return false;}}
 function syncToken(){try{return localStorage.getItem('sangre26-sync-token')||'';}catch(e){return '';}}
-function dropToken(){try{localStorage.removeItem('sangre26-sync-token');}catch(e){}}
+function dropToken(){try{localStorage.removeItem('sangre26-sync-token');}catch(e){}syncLabel();}
+function syncLabel(){const b=document.getElementById('syncbtn');if(b)b.textContent=syncToken()?'Notes sync: on · tap to replace token':'Notes sync: off · tap to paste token';}
 function decodeContent(j){return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));}
 function mergeNotes(remote){
   let changed=false;
@@ -442,10 +447,13 @@ function setupSync(tag){
   const t=prompt('One-time setup for cross-device notes:\n\nPaste a GitHub fine-grained personal access token with Contents read & write on '+NOTES_REPO+' only.\n(GitHub → Settings → Developer settings → Fine-grained tokens)');
   if(!t)return;
   try{localStorage.setItem('sangre26-sync-token',t.trim());}catch(e){setTag(tag,'storage unavailable — cannot keep the token here',true);return;}
+  syncLabel();
   setTag(tag,'token saved — syncing…',true);
   fetchRemoteNotes().then(()=>pushNotes(tag));
 }
 loadLocalNotes();
+syncLabel();
+document.getElementById('syncbtn').addEventListener('click',()=>setupSync(document.getElementById('synctag')));
 fetchRemoteNotes();
 /* Pick up edits made on other devices while this tab sits open */
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)fetchRemoteNotes();});
