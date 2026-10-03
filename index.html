@@ -379,6 +379,7 @@ function noteText(i){return (notes['w'+i]||{}).v||'';}
 function fitTa(ta){if(!ta.offsetParent)return;ta.style.height='auto';ta.style.height=Math.max(64,ta.scrollHeight+2)+'px';}
 function storeLocal(){try{localStorage.setItem('sangre26-notes-v2',JSON.stringify(notes));return true;}catch(e){return false;}}
 function syncToken(){try{return localStorage.getItem('sangre26-sync-token')||'';}catch(e){return '';}}
+function dropToken(){try{localStorage.removeItem('sangre26-sync-token');}catch(e){}}
 function decodeContent(j){return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));}
 function mergeNotes(remote){
   let changed=false;
@@ -397,8 +398,11 @@ async function fetchRemoteNotes(){
     if(syncToken()){
       const r=await fetch('https://api.github.com/repos/'+NOTES_REPO+'/contents/notes.json',
         {headers:{Authorization:'Bearer '+syncToken(),Accept:'application/vnd.github+json'},cache:'no-store'});
-      if(r.ok){const j=await r.json();notesSha=j.sha;mergeNotes(decodeContent(j).weeks);}
-    }else{
+      if(r.ok){const j=await r.json();notesSha=j.sha;mergeNotes(decodeContent(j).weeks);return;}
+      if(r.status!==401)return;
+      dropToken();   // expired/revoked: forget it so the next tap asks for a new one, and read the public copy
+    }
+    {
       const r=await fetch('notes.json?ts='+Date.now(),{cache:'no-store'});
       if(r.ok)mergeNotes((await r.json()).weeks);
     }
@@ -419,15 +423,19 @@ async function pushNotes(tag){
     const url='https://api.github.com/repos/'+NOTES_REPO+'/contents/notes.json';
     const h={Authorization:'Bearer '+syncToken(),Accept:'application/vnd.github+json'};
     const g=await fetch(url,{headers:h,cache:'no-store'});
+    if(g.status===401)throw Object.assign(new Error('HTTP 401'),{expired:true});
     if(g.ok){const j=await g.json();notesSha=j.sha;try{mergeNotes(decodeContent(j).weeks);}catch(e){}}
     const body={message:'Update week notes from dashboard',
       content:btoa(unescape(encodeURIComponent(JSON.stringify({weeks:notes},null,1))))};
     if(notesSha)body.sha=notesSha;
     const p=await fetch(url,{method:'PUT',headers:h,body:JSON.stringify(body)});
-    if(!p.ok)throw new Error('HTTP '+p.status);
+    if(!p.ok)throw Object.assign(new Error('HTTP '+p.status),{expired:p.status===401});
     notesSha=(await p.json()).content.sha;
     setTag(tag,'synced everywhere ✓');
-  }catch(e){setTag(tag,'sync failed ('+e.message+') — saved on this device; tap to retry',true);}
+  }catch(e){
+    if(e.expired){dropToken();setTag(tag,'sync token expired or revoked — saved on this device; tap here to paste a new one',true);}
+    else setTag(tag,'sync failed ('+e.message+') — saved on this device; tap to retry',true);
+  }
   pushBusy=false;
 }
 function setupSync(tag){
