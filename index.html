@@ -25,7 +25,7 @@ html{-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.5;
   padding:max(12px,env(safe-area-inset-top)) 14px calc(40px + env(safe-area-inset-bottom));max-width:760px;margin:0 auto}
 button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
-button:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--taper);outline-offset:2px}
+button:focus-visible,a:focus-visible{outline:2px solid var(--taper);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 header{padding:10px 2px 14px}
@@ -78,10 +78,6 @@ h2{font-family:var(--disp);font-weight:600;font-size:22px;text-transform:upperca
 .dt{font-weight:600;font-size:15px}
 .dt .chip{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--bg);background:var(--build);border-radius:4px;padding:2px 6px;margin-left:7px;vertical-align:1px}
 .dx{font-size:13.5px;color:var(--dim)}
-.notes{margin-top:12px}
-.notes label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:5px}
-.notes textarea{width:100%;min-height:64px;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--body);font-size:14px;padding:9px;resize:vertical}
-.savedtag{font-size:11px;color:var(--recovery);margin-top:4px;min-height:14px;font-family:var(--mono);cursor:pointer}
 .packbtn{margin-top:12px;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--display);text-transform:uppercase;letter-spacing:.06em;font-size:15px;padding:9px 12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .packbtn:focus-visible{outline:2px solid var(--build);outline-offset:2px}
 .packbtn .pkcount{font-family:var(--mono);font-size:12px;color:var(--faint);text-transform:none}
@@ -95,8 +91,6 @@ h2{font-family:var(--disp);font-weight:600;font-size:22px;text-transform:upperca
 
 footer{margin-top:26px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
 footer b{color:var(--dim)}
-.syncbtn{margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--card);cursor:pointer}
-.syncbtn:focus-visible{outline:2px solid var(--build);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -133,16 +127,14 @@ footer b{color:var(--dim)}
 
 <footer>
   <b>After Nov 15:</b> winter base block — the 2024&ndash;25 / 2025&ndash;26 template. Steady running, climbing 1&ndash;2x/wk, progressive trail longs, no December crater.<br><br>
-  Rules of the plan: races replace long runs, never add to them &middot; HRV below range two mornings in a row = drop the day's quality &middot; the biggest weekend lives five weeks out, not two.<br>
-  <button class="syncbtn" id="syncbtn" type="button">Notes sync</button>
-  <div class="savedtag" id="synctag" aria-live="polite"></div>
+  Rules of the plan: races replace long runs, never add to them &middot; HRV below range two mornings in a row = drop the day's quality &middot; the biggest weekend lives five weeks out, not two.
 </footer>
 
 <script>
 const PH = {recovery:'--recovery',build:'--build',peak:'--peak',taper:'--taper',race:'--race',bridge:'--bridge',off:'--off'};
 const W = [
 {n:1,s:'2026-07-06',e:'2026-07-12',ph:'race',t:'Poconos week',load:55,
- f:'Film the Elite Super, then race the Super. Grip work early, legs fresh by Saturday.',
+ f:'Film the Elite Super, then race the Super. Grip work early, legs fresh by Saturday. Jason\u2019s note: after racing Poconos, thighs super sore — good training. Sangre doesn\u2019t have climbs or descents this steep and won\u2019t be taken as hard, so this was the worst-case rehearsal.',
  d:[['Mon 7/6','run','Easy run (PM)','Done. 5.1 mi easy, 10:23/mi, HR 141.'],
     ['Tue 7/7','run','Intervals','Done. 5.4 mi, 9:57/mi avg, HR 140. No second session — HRV below range, sleep is the win.'],
     ['Wed 7/8','climb','Bouldering (AM)','Done. 54 min, HR 91. Moderate grades — last grip session before the race.'],
@@ -169,7 +161,7 @@ const W = [
     ['Sat 7/25','long','Long 16–18 mi trail','Done. 18.5 mi, 4:03, 1,791 ft, HR 142 — load 601, biggest day since Poconos. Fluid 31 oz/hr (A), sodium 1,330 mg/hr (A−), calories 210/hr (C+ — need a gel every 25 min). Negative split in 90° heat; legs tired, not destroyed.'],
     ['Sun 7/26','run','Easy 6–8 mi','Done. 7.2 mi, 10:05/mi, HR 137 — legs tired but moved well. Week 1 of the build complete.']]},
 {n:4,s:'2026-07-27',e:'2026-08-02',ph:'build',t:'Build 2 + Mexico City',load:65,
- f:'Quality early, then CDMX reshuffled: race the Super Saturday (B-effort, the Poconos fueling retry), film the Elite Beast Sunday — free altitude + vert at 7,300 ft. Deficit pauses Thursday: travel + race weekend fully fueled.',
+ f:'Quality early, then CDMX reshuffled: race the Super Saturday (B-effort, the Poconos fueling retry), film the Elite Beast Sunday — free altitude + vert at 7,300 ft. Deficit pauses Thursday: travel + race weekend fully fueled. Jason\u2019s note: the week went well — tired at times, but the training is doing its magic.',
  d:[['Mon 7/27','vert','Hill repeats','Done. 45 min, 2.8 mi w/ 6×90s, avg HR 123. Fueling sandwich matched the model 1:1 — new short-session template.'],
     ['Tue 7/28','run','Tempo 20 min','Done. 6.2 mi w/ full 20-min tempo (30:00–50:00) at ~8:12/mi, HR 158–163 — controlled and strong, 3 days after the 601-load long run. Vest-fueled to the model.'],
     ['Wed 7/29','run','Easy 4 mi','Done. 4.2 mi, 10:21/mi, HR 132 — properly easy.'],
@@ -358,105 +350,10 @@ const CUR=curWeekIdx();
   });
 })();
 
-/* Notes: shared across devices via notes.json committed to this repo.
-   - Local cache: localStorage 'sangre26-notes-v2' = {w0:{v:text,t:editedMs}}.
-     Migrated once from the legacy 'sangre26-notes' string map; the old key is
-     left untouched as a backup.
-   - Read: notes.json from the site (same-origin), or via the GitHub API when a
-     sync token is set. Merge rule: newest edit per week wins.
-   - Write: debounced commit to notes.json through the GitHub contents API using
-     a fine-grained PAT (Contents read/write, this repo only) pasted once per
-     device into localStorage 'sangre26-sync-token' — never stored in the repo.
-     Without a token, notes still save on-device like before. */
-const NOTES_REPO='jpdupree/TrainingCalendar';
-let notes={},notesSha=null,pushTimer=null,pushBusy=false;
-function loadLocalNotes(){
-  try{
-    const v2=localStorage.getItem('sangre26-notes-v2');
-    if(v2){notes=JSON.parse(v2)||{};return;}
-    const old=JSON.parse(localStorage.getItem('sangre26-notes')||'{}');
-    for(const k in old)if(typeof old[k]==='string'&&old[k])notes[k]={v:old[k],t:1};
-    localStorage.setItem('sangre26-notes-v2',JSON.stringify(notes));
-  }catch(e){notes={};}
-}
-function noteText(i){return (notes['w'+i]||{}).v||'';}
-function fitTa(ta){if(!ta.offsetParent)return;ta.style.height='auto';ta.style.height=Math.max(64,ta.scrollHeight+2)+'px';}
-function storeLocal(){try{localStorage.setItem('sangre26-notes-v2',JSON.stringify(notes));return true;}catch(e){return false;}}
-function syncToken(){try{return localStorage.getItem('sangre26-sync-token')||'';}catch(e){return '';}}
-function dropToken(){try{localStorage.removeItem('sangre26-sync-token');}catch(e){}syncLabel();}
-function syncLabel(){const b=document.getElementById('syncbtn');if(b)b.textContent=syncToken()?'Notes sync: on · tap to replace token':'Notes sync: off · tap to paste token';}
-function decodeContent(j){return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));}
-function mergeNotes(remote){
-  let changed=false;
-  for(const k in remote||{}){
-    const r=remote[k],l=notes[k];
-    if(r&&r.v!==undefined&&(!l||(r.t||0)>(l.t||0))){notes[k]=r;changed=true;}
-  }
-  if(!changed)return;
-  storeLocal();
-  document.querySelectorAll('.notes textarea').forEach(ta=>{
-    if(document.activeElement!==ta){ta.value=noteText(+ta.id.slice(2));fitTa(ta);}
-  });
-}
-async function fetchRemoteNotes(){
-  try{
-    if(syncToken()){
-      const r=await fetch('https://api.github.com/repos/'+NOTES_REPO+'/contents/notes.json',
-        {headers:{Authorization:'Bearer '+syncToken(),Accept:'application/vnd.github+json'},cache:'no-store'});
-      if(r.ok){const j=await r.json();notesSha=j.sha;mergeNotes(decodeContent(j).weeks);return;}
-      if(r.status!==401)return;
-      dropToken();   // expired/revoked: forget it so the next tap asks for a new one, and read the public copy
-    }
-    {
-      const r=await fetch('notes.json?ts='+Date.now(),{cache:'no-store'});
-      if(r.ok)mergeNotes((await r.json()).weeks);
-    }
-  }catch(e){}
-}
-function setTag(tag,msg,sticky){tag.textContent=msg;clearTimeout(tag._t);if(!sticky)tag._t=setTimeout(()=>tag.textContent='',2600);}
-function saveNote(i,val,tag){
-  notes['w'+i]={v:val,t:Date.now()};
-  const ok=storeLocal();
-  if(!syncToken()){setTag(tag,ok?'saved on this device — tap here to sync everywhere':'saved for this session only (storage unavailable)',true);return;}
-  setTag(tag,'saved — syncing…',true);
-  clearTimeout(pushTimer);pushTimer=setTimeout(()=>pushNotes(tag),2000);
-}
-async function pushNotes(tag){
-  if(pushBusy){clearTimeout(pushTimer);pushTimer=setTimeout(()=>pushNotes(tag),1500);return;}
-  pushBusy=true;
-  try{
-    const url='https://api.github.com/repos/'+NOTES_REPO+'/contents/notes.json';
-    const h={Authorization:'Bearer '+syncToken(),Accept:'application/vnd.github+json'};
-    const g=await fetch(url,{headers:h,cache:'no-store'});
-    if(g.status===401)throw Object.assign(new Error('HTTP 401'),{expired:true});
-    if(g.ok){const j=await g.json();notesSha=j.sha;try{mergeNotes(decodeContent(j).weeks);}catch(e){}}
-    const body={message:'Update week notes from dashboard',
-      content:btoa(unescape(encodeURIComponent(JSON.stringify({weeks:notes},null,1))))};
-    if(notesSha)body.sha=notesSha;
-    const p=await fetch(url,{method:'PUT',headers:h,body:JSON.stringify(body)});
-    if(!p.ok)throw Object.assign(new Error('HTTP '+p.status),{expired:p.status===401});
-    notesSha=(await p.json()).content.sha;
-    setTag(tag,'synced everywhere ✓');
-  }catch(e){
-    if(e.expired){dropToken();setTag(tag,'sync token expired or revoked — saved on this device; tap here to paste a new one',true);}
-    else setTag(tag,'sync failed ('+e.message+') — saved on this device; tap to retry',true);
-  }
-  pushBusy=false;
-}
-function setupSync(tag){
-  const t=prompt('One-time setup for cross-device notes:\n\nPaste a GitHub fine-grained personal access token with Contents read & write on '+NOTES_REPO+' only.\n(GitHub → Settings → Developer settings → Fine-grained tokens)');
-  if(!t)return;
-  try{localStorage.setItem('sangre26-sync-token',t.trim());}catch(e){setTag(tag,'storage unavailable — cannot keep the token here',true);return;}
-  syncLabel();
-  setTag(tag,'token saved — syncing…',true);
-  fetchRemoteNotes().then(()=>pushNotes(tag));
-}
-loadLocalNotes();
-syncLabel();
-document.getElementById('syncbtn').addEventListener('click',()=>setupSync(document.getElementById('synctag')));
-fetchRemoteNotes();
-/* Pick up edits made on other devices while this tab sits open */
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)fetchRemoteNotes();});
+/* Week notes removed 10/3/26 (unused). The two notes ever written were folded into the
+   week 1 and week 4 focus text. The local caches 'sangre26-notes-v2' and legacy
+   'sangre26-notes' are left untouched. The notes-sync token has no use now — forget it. */
+try{localStorage.removeItem('sangre26-sync-token');}catch(e){}
 
 /* Ragnar packing list — checkbox state is device-local in its own key. */
 const PACK=[
@@ -547,18 +444,10 @@ function wirePack(el){
       `<span class="wmain"><span class="wtitle">${w.t}</span><br><span class="wdates">${fmt(w.s)} – ${fmt(w.e)}</span></span>`+
       `<span class="wphase" style="color:${c};border:1px solid ${c}">${w.ph}</span>`+
       `<span class="chev">▼</span></button>`+
-      `<div class="wbody" id="wb${i}"><div class="wfocus">${w.f}</div>${days}${i===PACKW?packMarkup():''}`+
-      `<div class="notes"><label for="nt${i}">Log — how it actually went</label>`+
-      `<textarea id="nt${i}" placeholder="HRV trend, how the legs felt, anything to adjust…">${noteText(i).replace(/</g,'&lt;')}</textarea>`+
-      `<div class="savedtag" id="tag${i}"></div></div></div>`;
+      `<div class="wbody" id="wb${i}"><div class="wfocus">${w.f}</div>${days}${i===PACKW?packMarkup():''}</div>`;
     root.appendChild(el);
     el.querySelector('.whead').addEventListener('click',()=>toggle(i));
-    const ta=el.querySelector('textarea');
-    const tag=el.querySelector('.savedtag');
-    ta.addEventListener('input',()=>{fitTa(ta);saveNote(i,ta.value,tag);});
-    tag.addEventListener('click',()=>syncToken()?pushNotes(tag):setupSync(tag));
     if(i===PACKW)wirePack(el);
-    if(i===CUR)fitTa(ta);
   });
 })();
 
@@ -568,13 +457,11 @@ function toggle(i){
   const open=el.dataset.open==='true';
   el.dataset.open=!open;
   el.querySelector('.whead').setAttribute('aria-expanded',String(!open));
-  if(!open)fitTa(el.querySelector('textarea'));
 }
 function openWeek(i,scroll){
   const el=document.getElementById('week'+i);
   el.dataset.open='true';
   el.querySelector('.whead').setAttribute('aria-expanded','true');
-  fitTa(el.querySelector('textarea'));
   if(scroll)el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 document.getElementById('jump').addEventListener('click',()=>openWeek(CUR,true));
