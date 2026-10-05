@@ -252,7 +252,7 @@ const W = [
     ['Sun 10/4','rest','Rest','HRV 46, back in range (42–54). Sleep 7h19, score 65, bed 1:12 AM. Week 14 runs not pushed to Coros: doctor review of black stool + Hb 11.1 pending; ankle ~80%.']]},
 {n:14,s:'2026-10-05',e:'2026-10-11',ph:'recovery',t:'Recovery 2',load:15,
  f:'Short easy jogs only once HRV is back in range. Easy bike spins fill the gaps if legs want work before then. TWO MORE GATES before the first jog: (1) left front-of-ankle tendon pain-free walking, and (2) doctor has looked at the race-day black stool. LABS 9/29: hemoglobin 11.1 (low), down from 14.0 in Feb — about 1.5–2 points of real blood loss after allowing for post-race dilution, like 1.5–2 blood donations. Running waits for the doctor’s OK on the anemia; expect easy runs to feel hard and HR to run high while red cells rebuild (4–8 weeks, faster with good iron stores). Repeat CBC ~mid-Oct.',
- d:[['Mon 10/5','rest','Rest','—'],
+ d:[['Mon 10/5','rest','Rest','HRV 34 (low) despite an 11 PM bedtime: 6h50 asleep, score 76.'],
     ['Tue 10/6','run','Jog 2–3 mi (if HRV normal)','Truly easy.'],
     ['Wed 10/7','rest','Walk','—'],
     ['Thu 10/8','run','Jog 3 mi','—'],
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-10-04', hrv:46, lo:42, hi:54, status:'normal', recovery:100};
+const READY = {date:'2026-10-05', hrv:34, lo:42, hi:54, status:'low', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
