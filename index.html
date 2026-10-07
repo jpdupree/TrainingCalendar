@@ -254,7 +254,7 @@ const W = [
  f:'Short easy jogs only once HRV is back in range. Easy bike spins fill the gaps if legs want work before then. TWO MORE GATES before the first jog: (1) left front-of-ankle tendon pain-free walking, and (2) doctor has looked at the race-day black stool. LABS 9/29: hemoglobin 11.1 (low), down from 14.0 in Feb — about 1.5–2 points of real blood loss after allowing for post-race dilution, like 1.5–2 blood donations. DOCTOR 10/5: “mild iron deficiency anemia” — multivitamin with iron, no running restriction given. Iron darkens stool: tarry/sticky = call same day. GATES CLEARED 10/5: ankle fine (Jason) + doctor reviewed — Tue/Thu/Sat runs pushed to Coros at Zone 2. Repeat CBC being booked; expect easy runs to feel hard and HR to run high while red cells rebuild (4–8 weeks, faster with good iron stores). Repeat CBC ~mid-Oct.',
  d:[['Mon 10/5','rest','Rest','HRV 34 (low) after plenty of drinks and poor food Sunday (third drinking night in 6 days): 6h50 asleep, score 76.'],
     ['Tue 10/6','run','Jog 2–3 mi (if HRV normal)','Truly easy. Done (5:06 AM, from Jason’s screenshots — Coros connector down): 5.1 mi, 56:15, 11:03/mi, avg HR 142, 89 ft — 2.5x the planned 2 mi. Walk break ~min 15–23 = easy basketball-court suicides with company, run slow (not sprinted). Ankle fine. HRV 57 (above range), sleep 6h37, bed 9:26 PM.'],
-    ['Wed 10/7','rest','Walk','—'],
+    ['Wed 10/7','rest','Walk','HRV 45, in range. Sleep 8h03, score 92 — best since the race (11:05 PM bedtime).'],
     ['Thu 10/8','run','Jog 3 mi','—'],
     ['Fri 10/9','rest','Rest','—'],
     ['Sat 10/10','run','Easy 4 mi','—'],
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-10-06', hrv:57, lo:42, hi:54, status:'above', recovery:100};
+const READY = {date:'2026-10-07', hrv:45, lo:41, hi:55, status:'normal', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
