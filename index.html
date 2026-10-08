@@ -255,7 +255,7 @@ const W = [
  d:[['Mon 10/5','rest','Rest','HRV 34 (low) after plenty of drinks and poor food Sunday (third drinking night in 6 days): 6h50 asleep, score 76.'],
     ['Tue 10/6','run','Jog 2–3 mi (if HRV normal)','Truly easy. Done (5:06 AM, from Jason’s screenshots — Coros connector down): 5.1 mi, 56:15, 11:03/mi, avg HR 142, 89 ft — 2.5x the planned 2 mi. Walk break ~min 15–23 = easy basketball-court suicides with company, run slow (not sprinted). Ankle fine. HRV 57 (above range), sleep 6h37, bed 9:26 PM.'],
     ['Wed 10/7','rest','Walk','HRV 45, in range. Sleep 8h03, score 92 — best since the race (11:05 PM bedtime). Done. Walk 1.6 mi, 32 min, 20:19/mi, avg HR 94.'],
-    ['Thu 10/8','run','Jog 3 mi','—'],
+    ['Thu 10/8','run','Jog 3 mi','Done. 3.1 mi, 39:23, 12:43/mi, avg HR 114 (Coros: very easy). Right on plan. HRV 48 normal; sleep 6h07 + 27-min nap, bed 9:39 PM.'],
     ['Fri 10/9','rest','Rest','—'],
     ['Sat 10/10','run','Easy 4 mi','—'],
     ['Sun 10/11','climb','Climbing (easy)','Reintroduce gently.']]},
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-10-07', hrv:45, lo:41, hi:55, status:'normal', recovery:100};
+const READY = {date:'2026-10-08', hrv:48, lo:42, hi:54, status:'normal', recovery:99};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
