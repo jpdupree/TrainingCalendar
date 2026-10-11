@@ -34,7 +34,7 @@ Everything lives in `index.html`. No build step, no dependencies beyond Google F
 1. **Mid-season plan adjustments** — after Poconos (Jul 11), CDMX (Aug 1), and especially Ragnar (Aug 21–22), Jason will report HRV/fatigue and request week edits. Edit only the affected `W` entries; keep `load` values honest so the ribbon stays truthful.
 2. **Sangre contingency (week of Oct 19)** — if Sangre goes badly, weeks 16–18 get rewritten (RDL becomes social-pace, shorter, or dropped). The rule already in the footer: decide with data, not pride.
 3. **Possible feature asks**: week-complete checkboxes, a post-Nov 15 winter-base block. Any new persisted state goes in its own localStorage key, try/catch-wrapped.
-4. **Winter block (after Nov 15)** — extend `W` following the 2024–25 template: steady easy running, climbing 1–2x/week, progressive trail longs, explicitly guarding against the December post-race crater.
+4. **Winter block (after Nov 15)** — extend `W` following the 2024–25 template: steady easy running, climbing 1–2x/week, progressive trail longs, explicitly guarding against the December post-race crater. **Add leg strength 2x/week (Jason, 10/11/26) as base for a 2027 Swiss Alps 100:** squats, lunges, step-downs, split squats, single-leg RDLs, calf raises and tibialis raises (left front-of-ankle tendon flared at Sangre). Squats always leave him sore for days when done occasionally — start very light and keep it frequent so soreness fades after the first 2–3 sessions; never schedule heavy legs in the 48 h before a long run.
 
 ## Plan invariants (do not "optimize" these away)
 - The biggest training weekend sits **five weeks** before Sangre (Ragnar), not two — that spacing is the fix for the 2025 DNF. Don't add big efforts to weeks 9–11.
