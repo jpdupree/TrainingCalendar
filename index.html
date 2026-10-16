@@ -265,7 +265,7 @@ const W = [
     ['Tue 10/13','run','Easy 4 mi (shortened from 5)','On Coros, Zone 2; stretch to 5 only if truly easy. No alcohol tonight; skip the multivitamin (blood draw tomorrow). HRV 49 normal, sleep 8h24. Weight 163.8 AM vs 165.6 at bedtime — belly clearly smaller in the morning photo (distension, not fat). Done. 5.0 mi hilly trail, 1:23:41 (16:41/mi incl. stops), 689 ft up, avg HR 142, training load 190 (Coros: threshold focus) — harder than the planned easy 4.'],
     ['Wed 10/14','rest','Rest \u00b7 repeat CBC + ferritin (AM)','Skip the multivitamin 10/13 and this morning; no alcohol the night before. HRV 42 (normal, low end) after the hard trail day; sleep 7h54, score 86. Done. Walk 1.6 mi, 32 min, avg HR 95.'],
     ['Thu 10/15','rest','Rest','Pack filming kit. Early night. Instead: 6.0 mi, 57:25, 9:33/mi, avg HR 157, training load 227 — the hardest run since Sangre, on a rest day, after 4h51 of sleep (up 3:45 AM). HRV 54, recovery 71%.'],
-    ['Fri 10/16','travel','Fly to Toronto (evening)','—'],
+    ['Fri 10/16','travel','Fly to Toronto (evening)','HRV 51 normal; sleep 9h07, score 92 — best night since the race. Recovery 99%.'],
     ['Sat 10/17','race','SPARTAN BLUE MOUNTAIN (Ontario)','Film the elite Beast. Hiking only — cooked legs get hurt on steep terrain. Fly home in the evening.','FILM'],
     ['Sun 10/18','rest','Rest — home','Travel legs. Easy walk if you want one.']]},
 {n:16,s:'2026-10-19',e:'2026-10-25',ph:'bridge',t:'RDL bridge 1 — decision week',load:40,
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-10-15', hrv:54, lo:40, hi:54, status:'normal', recovery:98};
+const READY = {date:'2026-10-16', hrv:51, lo:40, hi:54, status:'normal', recovery:99};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
