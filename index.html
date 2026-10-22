@@ -272,8 +272,8 @@ const W = [
  f:'Sangre went well — RDL is now a SOCIAL race: no expectations, no need to finish, mainly to run with a friend and see how a non-altitude 100 feels (Jason, 9/28). REGISTERED 10/17 (Hyatt House booked). Gates met: doctor reviewed the stool, ankle fine, labs 10/14 hemoglobin 13.2 + ferritin 88. Easy means easy now \u2014 Zone 2, no hard group runs. Dropping at RDL is a fine outcome. Tue/Thu/Sat/Sun runs pushed to Coros 10/18 at Zone 2.',
  d:[['Mon 10/19','rest','Rest','HRV 44 normal; sleep 7h05, score 77. Recovery back to 100%.'],
     ['Tue 10/20','run','Easy 5 mi','Done. 5.6 mi, 57:50, 10:15/mi, avg HR 134 (Coros: very easy, performance good). HRV 47 normal; sleep 5h29 + 28-min nap.'],
-    ['Wed 10/21','climb','Climbing','—'],
-    ['Thu 10/22','run','Easy 6 mi','—'],
+    ['Wed 10/21','climb','Climbing','Done. Indoor climb 36 min, 7 routes to 5.10d, avg HR 89. HRV 56 (above) after 7h21 sleep.'],
+    ['Thu 10/22','run','Easy 6 mi','Done. 6.0 mi, 1:00:18, 9:59/mi, avg HR 143 (Coros: easy). HR climbed at even pace: 126 \u2192 138 \u2192 143 \u2192 144 \u2192 155 \u2192 150 by mile; Jason felt no change, suspects a sensor glitch. Then a strength session with running (25 min, load 106). After 4h34 sleep. Recovery 61%.'],
     ['Fri 10/23','rest','Rest','—'],
     ['Sat 10/24','long','Moderate 14–16 mi','Easy-moderate. This carries you to RDL.'],
     ['Sun 10/25','run','Easy 4 mi','—']]},
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-10-20', hrv:47, lo:40, hi:54, status:'normal', recovery:100};
+const READY = {date:'2026-10-22', hrv:49, lo:41, hi:53, status:'normal', recovery:61};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
