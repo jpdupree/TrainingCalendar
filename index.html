@@ -284,7 +284,7 @@ const W = [
     ['Wed 10/28','run','Easy 5 mi + strides','—'],
     ['Thu 10/29','climb','Climbing (light)','—'],
     ['Fri 10/30','rest','Rest','—'],
-    ['Sat 10/31','run','Easy 8–10 mi','—'],
+    ['Sat 10/31','run','Easy 8–10 mi','Last fueling rehearsal: eat at race rate (250–300 cal/hr) from mile 1.'],
     ['Sun 11/1','rest','Rest','—']]},
 {n:18,s:'2026-11-02',e:'2026-11-08',ph:'race',t:'RIO DEL LAGO 100',load:90,
  f:'The victory lap. Run by HR, hike climbs early, enjoy the American River and your friend at the finish.',
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-10-24', hrv:56, lo:41, hi:53, status:'above', recovery:50};
+const READY = {date:'2026-10-24', hrv:56, lo:41, hi:53, status:'above', recovery:63};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
