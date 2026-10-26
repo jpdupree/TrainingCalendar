@@ -276,10 +276,10 @@ const W = [
     ['Thu 10/22','run','Easy 6 mi','Done. 6.0 mi, 1:00:18, 9:59/mi, avg HR 143 (Coros: easy). HR climbed at even pace: 126 \u2192 138 \u2192 143 \u2192 144 \u2192 155 \u2192 150 by mile; Jason felt no change, suspects a sensor glitch. Then a strength session with running (25 min, load 106). After 4h34 sleep. Recovery 61%.'],
     ['Fri 10/23','rest','Rest','HRV 44 normal; sleep 8h06, score 87, 26% deep (10:04 PM bed). Recovery 95% — fresh for Saturday.'],
     ['Sat 10/24','long','Moderate 14–16 mi','Easy-moderate. This carries you to RDL. Done. 16.1 mi trail, 3:41:59 (12:50/mi moving), 2,198 ft, avg HR 143, load 409 (aerobic TE 5.0). Recovery 50% after. Fuel ~620 cal in-run (~170/hr, under target), 3 clear pees, 2 healthy BM stops, kit spot on. Evening: friend\'s birthday 5K, 3.3 mi, 9:25/mi, HR 153 (stood in for Sunday\'s run). Recovery 38% after.'],
-    ['Sun 10/25','rest','Rest (was easy 4 mi)','Swapped: Saturday-night birthday 5K covered this run. Full rest.']]},
+    ['Sun 10/25','rest','Rest (was easy 4 mi)','Swapped: Saturday-night birthday 5K covered this run. Full rest. Done. HRV 37 (below) after the double day; slept 8h49 + 38 min nap.']]},
 {n:17,s:'2026-10-26',e:'2026-11-01',ph:'bridge',t:'RDL bridge 2',load:35,
  f:'Consistency, nothing ambitious. Sangre fitness carries this race.',
- d:[['Mon 10/26','rest','Rest','—'],
+ d:[['Mon 10/26','rest','Rest','HRV 55 (above), sleep 7h25, recovery 93%.'],
     ['Tue 10/27','run','Easy 5 mi','—'],
     ['Wed 10/28','run','Easy 5 mi + strides','—'],
     ['Thu 10/29','climb','Climbing (light)','—'],
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-10-24', hrv:56, lo:41, hi:53, status:'above', recovery:63};
+const READY = {date:'2026-10-26', hrv:55, lo:40, hi:54, status:'above', recovery:93};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
