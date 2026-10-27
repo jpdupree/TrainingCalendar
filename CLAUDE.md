@@ -1,4 +1,4 @@
-# Sangre 2026 Training Dashboard
+# Training Dashboard (2026 ultra season; renamed from "Sangre 2026" on 10/27/26 after the race)
 
 ## What this is
 A single-file training dashboard (`index.html`) hosted on GitHub Pages, used as a phone home-screen app. It covers Jason's Jul 6 – Nov 15, 2026 ultra season: Spartan Poconos → Spartan LATAM (CDMX) → Ragnar Rainier → Spartan NA Champs (Seattle, film only) → **Sangre de Cristo 100 (Sep 26–27, A-race, redemption after a mile-86 DNF in 2025)** → Spartan Blue Mountain (film only) → Rio del Lago 100 (Nov 7–8, fun race) → Cancun off week → Savage Race FL (film only).
