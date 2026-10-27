@@ -279,8 +279,8 @@ const W = [
     ['Sun 10/25','rest','Rest (was easy 4 mi)','Swapped: Saturday-night birthday 5K covered this run. Full rest. Done. HRV 37 (below) after the double day; slept 8h49 + 38 min nap.']]},
 {n:17,s:'2026-10-26',e:'2026-11-01',ph:'bridge',t:'RDL bridge 2',load:35,
  f:'Consistency, nothing ambitious. Sangre fitness carries this race.',
- d:[['Mon 10/26','rest','Rest','HRV 55 (above), sleep 7h25, recovery 93%.'],
-    ['Tue 10/27','run','Easy 5 mi','—'],
+ d:[['Mon 10/26','rest','Rest','HRV 55 (above), sleep 7h25, recovery 93%. Easy walk 2.3 mi.'],
+    ['Tue 10/27','run','Easy 5 mi','Done. 5.0 mi, 10:12/mi, avg HR 136, felt easy. HRV 52 (normal), sleep 5h15.'],
     ['Wed 10/28','run','Easy 5 mi + strides','—'],
     ['Thu 10/29','climb','Climbing (light)','—'],
     ['Fri 10/30','rest','Rest','—'],
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-10-26', hrv:55, lo:40, hi:54, status:'above', recovery:93};
+const READY = {date:'2026-10-27', hrv:52, lo:40, hi:54, status:'normal', recovery:97};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
