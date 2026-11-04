@@ -289,7 +289,7 @@ const W = [
 {n:18,s:'2026-11-02',e:'2026-11-08',ph:'race',t:'RIO DEL LAGO 100',load:90,
  f:'The victory lap. Run by HR, hike climbs early, enjoy the American River and your friend at the finish.',
  d:[['Mon 11/2','travel','Shakeout 20 min AM · fly to Tulsa (late afternoon)','Run before the flight. Drop bags + race kit packed BEFORE you leave: Thursday evening is too short to start from scratch. Hydrate on the plane. Done. 2.2 mi treadmill, 20:14, 9:17/mi, avg HR 130. HRV 56 (normal).'],
-    ['Tue 11/3','travel','Work trip — Tulsa','Rest. Keep meals plain and familiar.'],
+    ['Tue 11/3','travel','Work trip — Tulsa','Rest. Keep meals plain and familiar. Instead: indoor climb 1:18, avg HR 88 (easy). HRV 58 (above), sleep 8h56.'],
     ['Wed 11/4','run','Work trip — Tulsa · shakeout 20 min + strides','Hotel area or treadmill. Early bed.'],
     ['Thu 11/5','travel','Fly home from Tulsa (late afternoon)','Low-residue eating starts today. At home: final check of drop bags and carry-on kit, then bed early.'],
     ['Fri 11/6','travel','Fly to Sacramento (AM) · packet pickup','Carry shoes, vest and race kit on board. Check pickup hours + drop-bag deadline. Plain dinner, feet up, alarm for 3:30 AM.'],
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-11-02', hrv:56, lo:40, hi:56, status:'normal', recovery:100};
+const READY = {date:'2026-11-03', hrv:58, lo:42, hi:56, status:'above', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
