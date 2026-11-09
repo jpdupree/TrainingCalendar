@@ -297,7 +297,7 @@ const W = [
     ['Sun 11/8','race','RIO DEL LAGO — FINISH','Then straight to vacation mode. Finished ~9:29 AM, 1.5 h inside the 30 h cutoff. Lessons: no groin trimming the night before (bad chafing despite lube); tape/protect peeling post-Sangre feet from the start (early blisters).','RACE']]},
 {n:19,s:'2026-11-09',e:'2026-11-15',ph:'off',t:'Cancun → Savage',load:10,
  f:'Full off week in Cancun — the structured off-ramp that prevents the December crater. Then Savage on the way home.',
- d:[['Mon 11/9','rest','Cancun','Swim. Walk. Nothing else.'],
+ d:[['Mon 11/9','rest','Cancun','Swim. Walk. Nothing else. HRV 39 (below, expected after a 100), sleep 5h20, recovery 42%.'],
     ['Tue 11/10','rest','Cancun','—'],
     ['Wed 11/11','rest','Cancun','—'],
     ['Thu 11/12','rest','Cancun','—'],
@@ -471,7 +471,7 @@ window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR)
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-11-06', hrv:51, lo:43, hi:57, status:'normal', recovery:21};
+const READY = {date:'2026-11-09', hrv:39, lo:43, hi:57, status:'below', recovery:42};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
