@@ -45,9 +45,15 @@ h1 .thin{color:var(--dim);font-weight:600}
 #ready .normal b,#ready .above b{color:var(--recovery)}
 #ready .stale b{color:var(--faint)}
 
+.seasons{display:flex;gap:6px;flex-wrap:wrap;padding:4px 2px 0}
+.seasons button{font-family:var(--disp);font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--card)}
+.seasons button[aria-pressed="true"]{color:var(--text);border-color:var(--build)}
+.seasons button .now{color:var(--build);font-family:var(--mono);font-size:10px;letter-spacing:.08em;margin-left:6px}
 .ribbonwrap{margin:18px -14px 6px;padding:0 14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.ribbon{min-width:660px}
-.ribbon svg{display:block;width:100%;height:auto}
+.ribbon svg{display:block;height:auto;max-width:none}
+.pastrow{width:100%;display:flex;align-items:center;gap:12px;padding:11px 14px;margin-bottom:10px;text-align:left;background:var(--card);border:1px dashed var(--line);border-radius:12px;color:var(--dim)}
+.pastrow .wtitle{font-size:16px;color:var(--dim)}
+.pastrow[aria-expanded="true"] .chev{transform:rotate(180deg)}
 .rlegend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 2px 4px;font-size:12px;color:var(--dim)}
 .rlegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
 
@@ -95,15 +101,13 @@ footer b{color:var(--dim)}
 </head>
 <body>
 
+<nav class="seasons" id="seasons" aria-label="Season"></nav>
+
 <header>
-  <div class="kicker">Ultra season &middot; Sangre redeemed, 35:39</div>
-  <h1>Training <span class="thin">/ 2026</span></h1>
-  <p class="sub">Jul 6 &ndash; Nov 15 &middot; Poconos &rarr; CDMX &rarr; Ragnar Rainier &rarr; Sangre de Cristo 100 &rarr; Rio del Lago 100</p>
-  <div class="counters">
-    <div class="counter hot"><b id="cd-sangre">—</b><span>to Sangre</span></div>
-    <div class="counter"><b id="cd-rdl">—</b><span>to RDL</span></div>
-    <div class="counter"><b id="cd-next">—</b><span id="cd-next-label">next event</span></div>
-  </div>
+  <div class="kicker" id="kicker"></div>
+  <h1>Training <span class="thin" id="year"></span></h1>
+  <p class="sub" id="sub"></p>
+  <div class="counters" id="counters"></div>
   <div class="counters" id="ready" aria-label="Morning readiness from Coros"></div>
 </header>
 
@@ -126,7 +130,7 @@ footer b{color:var(--dim)}
 <div id="weeks"></div>
 
 <footer>
-  <b>After Nov 15:</b> winter base block — the 2024&ndash;25 / 2025&ndash;26 template. Steady running, climbing 1&ndash;2x/wk, progressive trail longs, no December crater.<br><br>
+  <span id="footnote"></span><br><br>
   Rules of the plan: races replace long runs, never add to them &middot; HRV below range two mornings in a row = drop the day's quality &middot; the biggest weekend lives five weeks out, not two.
 </footer>
 
@@ -305,6 +309,53 @@ const W = [
     ['Sat 11/14','race','SAVAGE RACE FL','Film the elites — strictly walking, six days post-100.','FILM'],
     ['Sun 11/15','travel','Home','Winter base block starts next week.']]}
 ];
+
+/* 2027 season: Swiss Alps 100 (Aug 6, 2027). Week numbers restart at 1. Opens with the
+   same 3-week post-100 recovery structure used after Sangre (2026 W13–W15). */
+const W27 = [
+{n:1,s:'2026-11-16',e:'2026-11-22',ph:'recovery',t:'Recovery 1',load:8,
+ f:'RDL done: 28:29, 103.4 mi, 12,087 ft, the second 100 in six weeks. Same structure as after Sangre. Zero running this week: walks, pool once the chafing has closed, easy bike spins only if legs ask for movement. Keep blisters clean and covered until fully healed. Eat to appetite; the deficit can wait. GATE for the first jog: HRV back in range two mornings in a row, blisters closed, no limp. Post-race data so far: HRV 39 (below) day 1, recovery 74% day 2.',
+ d:[['Mon 11/16','rest','Walk 20–30 min','Home from Florida. Unpack, laundry, early night.'],
+    ['Tue 11/17','rest','Walk or easy bike 20–30 min','—'],
+    ['Wed 11/18','rest','Rest','—'],
+    ['Thu 11/19','rest','Walk or swim','Swim only once the chafing has fully closed.'],
+    ['Fri 11/20','rest','Rest','—'],
+    ['Sat 11/21','climb','Easy climbing (optional)','Upper body only, low grades. Skip if hands or feet are still sore.'],
+    ['Sun 11/22','rest','Walk 30–45 min','Flat. Check the run gate: HRV in range two mornings running?']]},
+{n:2,s:'2026-11-23',e:'2026-11-29',ph:'recovery',t:'Recovery 2',load:15,
+ f:'Short easy jogs only once the gate is met (HRV in range two mornings running, blisters closed, no limp). Easy means conversational, HR under ~135. After Sangre the first jog ran 2.5x the plan with friends; keep these short even if they feel great. Easy bike fills the gaps. Thanksgiving Thursday: eat, then walk.',
+ d:[['Mon 11/23','rest','Rest','—'],
+    ['Tue 11/24','run','Jog 2–3 mi (if gate met)','Otherwise walk or easy bike 30 min.'],
+    ['Wed 11/25','climb','Climbing (easy)','—'],
+    ['Thu 11/26','rest','Thanksgiving','Walk after the meal.'],
+    ['Fri 11/27','run','Jog 3 mi','Easy bike instead if HRV is below range.'],
+    ['Sat 11/28','rest','Walk / hike 45–60 min','—'],
+    ['Sun 11/29','run','Easy 3–4 mi','Only if Tue and Fri felt normal.']]},
+{n:3,s:'2026-11-30',e:'2026-12-06',ph:'bridge',t:'Recovery 3 — back to routine',load:25,
+ f:'Ease back into a normal week: easy runs, climbing, and the FIRST light leg-strength session, the base for the Swiss Alps. Bodyweight only and well short of effort, so the usual days-long squat soreness never starts; it fades for good once sessions are frequent. Tibialis raises for the left ankle. No heavy legs in the 48 h before the long run. The December crater guard starts here: keep the routine even with no race on the calendar.',
+ d:[['Mon 11/30','rest','Rest','—'],
+    ['Tue 12/1','run','Easy 4 mi','Zone 2.'],
+    ['Wed 12/2','climb','Climbing + light legs','Bodyweight: squats 2×8, split squats 2×6/leg, step-downs 2×8/leg, calf raises 2×12, tibialis raises 2×15. Stop with plenty left.'],
+    ['Thu 12/3','run','Easy 4 mi','Zone 2.'],
+    ['Fri 12/4','rest','Rest','—'],
+    ['Sat 12/5','long','Easy trail 6–7 mi','First longer run back. Walk the climbs. 250–300 cal/hr habit starts again.'],
+    ['Sun 12/6','climb','Climbing (easy) or rest','—']]}
+];
+
+const SEASONS = [
+ {id:'2026',label:'2026 · Sangre → RDL',weeks:W,packWeek:7,
+  kicker:'Ultra season &middot; Sangre 35:39 &middot; RDL 28:29',
+  sub:'Jul 6 &ndash; Nov 15 &middot; Poconos &rarr; CDMX &rarr; Ragnar Rainier &rarr; Sangre de Cristo 100 &rarr; Rio del Lago 100',
+  counters:[['2026-09-26','to Sangre',true],['2026-11-07','to RDL']],
+  events:[['2026-07-11','Poconos'],['2026-08-01','CDMX'],['2026-08-21','Ragnar'],['2026-09-19','Seattle'],['2026-09-26','Sangre'],['2026-10-17','Blue Mtn'],['2026-11-07','RDL'],['2026-11-14','Savage']],
+  foot:'<b>Season done:</b> two 100s finished, six weeks apart. The 2027 season picks up on Nov 16.'},
+ {id:'2027',label:'2027 · Swiss Alps 100',weeks:W27,
+  kicker:'Swiss Alps 100 &middot; Aug 6, 2027',
+  sub:'Nov 16 &ndash; Aug 2027 &middot; Recovery &rarr; winter base &rarr; build &rarr; Swiss Alps 100',
+  counters:[['2027-08-06','to Swiss Alps',true]],
+  events:[['2027-08-06','Swiss Alps']],
+  foot:'<b>Next:</b> winter base block from Dec 7. Steady easy running, climbing 1&ndash;2x/wk, progressive trail longs, leg strength 2x/wk starting light, no December crater. Written week by week as recovery data comes in.'}
+];
 const DOTC={run:'--taper',vert:'--peak',climb:'--bridge',rest:'--off',race:'--race',travel:'--off',night:'--build',long:'--build'};
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const dayMS=86400000;
@@ -312,43 +363,94 @@ function pdate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)
 const today=new Date();today.setHours(0,0,0,0);
 function daysTo(s){return Math.ceil((pdate(s)-today)/dayMS);}
 
-(function counters(){
-  const s=daysTo('2026-09-26'),r=daysTo('2026-11-07');
-  document.getElementById('cd-sangre').textContent=s>0?s:(s>=-1?'GO':'done');
-  document.getElementById('cd-rdl').textContent=r>0?r:(r>=-1?'GO':'done');
-  const ev=[['2026-07-11','Poconos'],['2026-08-01','CDMX'],['2026-08-21','Ragnar'],['2026-09-19','Seattle'],['2026-09-26','Sangre'],['2026-10-17','Blue Mtn'],['2026-11-07','RDL'],['2026-11-14','Savage']];
-  const nx=ev.find(e=>daysTo(e[0])>=0);
-  if(nx){document.getElementById('cd-next').textContent=daysTo(nx[0]);document.getElementById('cd-next-label').textContent=nx[1];}
-  else{document.getElementById('cd-next').textContent='—';document.getElementById('cd-next-label').textContent='season done';}
-})();
-
-function curWeekIdx(){
-  for(let i=0;i<W.length;i++){if(today>=pdate(W[i].s)&&today<=pdate(W[i].e))return i;}
-  return today<pdate(W[0].s)?0:W.length-1;
+/* Seasons: the page shows one season at a time. It opens on the season that holds today
+   (else the next one to start, else the last); the viewer's pick is remembered in its own
+   key, but only until the date-based current season changes. */
+function weekIdxOn(weeks){
+  for(let i=0;i<weeks.length;i++){if(today>=pdate(weeks[i].s)&&today<=pdate(weeks[i].e))return i;}
+  return -1;
 }
-const CUR=curWeekIdx();
+function currentSeason(){
+  const live=SEASONS.find(s=>weekIdxOn(s.weeks)>=0);
+  if(live)return live;
+  return SEASONS.find(s=>pdate(s.weeks[0].s)>today)||SEASONS[SEASONS.length-1];
+}
+const NOW=currentSeason();
+const SEASONKEY='training-season-v1';
+function savedSeason(){
+  try{
+    const v=JSON.parse(localStorage.getItem(SEASONKEY)||'null');
+    if(v&&v.cur===NOW.id)return SEASONS.find(s=>s.id===v.id)||null;
+  }catch(e){}
+  return null;
+}
+let VIEW=savedSeason()||NOW;
+let CUR=-1;
+const BW=34;
 
-(function ribbon(){
-  const n=W.length,bw=660/n,h=120,base=100;
+function counters(s){
+  const el=document.getElementById('counters');
+  const val=d=>d>0?d:(d>=-1?'GO':'done');
+  let html=s.counters.map(c=>`<div class="counter${c[2]?' hot':''}"><b>${val(daysTo(c[0]))}</b><span>${c[1]}</span></div>`).join('');
+  const nx=s.events.find(e=>daysTo(e[0])>=0&&!s.counters.some(c=>c[0]===e[0]));
+  const goal=s.counters.find(c=>daysTo(c[0])>0);
+  html+=nx?`<div class="counter"><b>${daysTo(nx[0])}</b><span>${nx[1]}</span></div>`
+          :goal?`<div class="counter"><b>${Math.ceil(daysTo(goal[0])/7)}</b><span>weeks to go</span></div>`
+          :`<div class="counter"><b>—</b><span>season done</span></div>`;
+  el.innerHTML=html;
+}
+
+function ribbon(s){
+  const weeks=s.weeks,n=weeks.length,h=120,base=100,width=n*BW;
   let bars='',flags='';
-  W.forEach((w,i)=>{
-    const x=i*bw,bh=w.load*0.78,y=base-bh,c=css(PH[w.ph]);
-    bars+=`<rect x="${x+2}" y="${y}" width="${bw-4}" height="${bh}" rx="2" fill="${c}" opacity="${i===CUR?1:0.75}"/>`;
+  weeks.forEach((w,i)=>{
+    const x=i*BW,bh=w.load*0.78,y=base-bh,c=css(PH[w.ph]);
+    bars+=`<rect x="${x+3}" y="${y}" width="${BW-6}" height="${bh}" rx="2" fill="${c}" opacity="${i===CUR?1:0.75}"/>`;
     if(w.ph==='race'||w.ph==='peak'){
-      flags+=`<line x1="${x+bw/2}" y1="${y}" x2="${x+bw/2}" y2="${y-13}" stroke="${css('--text')}" stroke-width="1.5"/>`+
-             `<path d="M ${x+bw/2} ${y-13} l 9 3.5 l -9 3.5 z" fill="${css('--race')}"/>`;
+      flags+=`<line x1="${x+BW/2}" y1="${y}" x2="${x+BW/2}" y2="${y-13}" stroke="${css('--text')}" stroke-width="1.5"/>`+
+             `<path d="M ${x+BW/2} ${y-13} l 9 3.5 l -9 3.5 z" fill="${css('--race')}"/>`;
     }
-    if(i===CUR){bars+=`<circle cx="${x+bw/2}" cy="${base+9}" r="3.5" fill="${css('--build')}"/>`;}
-    bars+=`<rect x="${x}" y="0" width="${bw}" height="${h}" fill="transparent" style="cursor:pointer" data-w="${i}"><title>W${w.n} — ${w.t}</title></rect>`;
+    if(i===CUR){bars+=`<circle cx="${x+BW/2}" cy="${base+9}" r="3.5" fill="${css('--build')}"/>`;}
+    bars+=`<rect x="${x}" y="0" width="${BW}" height="${h}" fill="transparent" style="cursor:pointer" data-w="${i}"><title>W${w.n} — ${w.t}</title></rect>`;
   });
+  const top=weeks.reduce((a,w)=>w.load>a.load?w:a,weeks[0]);
+  const label=`Training load by week, ${fmt(weeks[0].s)} to ${fmt(weeks[n-1].e)}. Highest load: week ${top.n}, ${top.t}. Flags mark race and peak weeks.`;
   document.getElementById('ribbon').innerHTML=
-    `<svg viewBox="0 0 660 ${h}" role="img" aria-label="Training load by week, July through November. Peaks at Ragnar week 7 and Sangre race week 12. Flags mark race and peak weeks.">
-     <line x1="0" y1="${base}" x2="660" y2="${base}" stroke="${css('--line')}" stroke-width="1"/>${bars}${flags}</svg>`;
-  document.getElementById('ribbon').addEventListener('click',e=>{
-    const t=e.target.closest('[data-w]');if(!t)return;
-    openWeek(+t.dataset.w,true);
-  });
-})();
+    `<svg width="${width}" height="${h}" viewBox="0 0 ${width} ${h}" role="img" aria-label="${label}">
+     <line x1="0" y1="${base}" x2="${width}" y2="${base}" stroke="${css('--line')}" stroke-width="1"/>${bars}${flags}</svg>`;
+  const wrap=document.querySelector('.ribbonwrap');
+  wrap.scrollLeft=CUR>=0?Math.max(0,CUR*BW+BW/2-wrap.clientWidth/2):0;
+}
+document.getElementById('ribbon').addEventListener('click',e=>{
+  const t=e.target.closest('[data-w]');if(!t)return;
+  openWeek(+t.dataset.w,true);
+});
+
+function seasonNav(){
+  const nav=document.getElementById('seasons');
+  nav.innerHTML=SEASONS.map(s=>`<button type="button" data-season="${s.id}" aria-pressed="${s===VIEW}">${s.label}${s===NOW?'<span class="now">NOW</span>':''}</button>`).join('');
+}
+document.getElementById('seasons').addEventListener('click',e=>{
+  const b=e.target.closest('[data-season]');if(!b)return;
+  const s=SEASONS.find(x=>x.id===b.dataset.season);
+  if(!s||s===VIEW)return;
+  try{localStorage.setItem(SEASONKEY,JSON.stringify({id:s.id,cur:NOW.id}));}catch(err){}
+  show(s);
+  window.scrollTo(0,0);
+});
+
+function show(s){
+  VIEW=s;
+  CUR=s===NOW?weekIdxOn(s.weeks):-1;
+  document.getElementById('kicker').innerHTML=s.kicker;
+  document.getElementById('year').textContent='/ '+s.id;
+  document.getElementById('sub').innerHTML=s.sub;
+  document.getElementById('footnote').innerHTML=s.foot;
+  seasonNav();
+  counters(s);
+  ribbon(s);
+  buildWeeks(s);
+}
 
 /* Week notes removed 10/3/26 (unused). The two notes ever written were folded into the
    week 1 and week 4 focus text. The local caches 'sangre26-notes-v2' and legacy
@@ -391,7 +493,6 @@ const PACK=[
   ['trash','Trash bag']]]
 ];
 const PACKKEY='sangre26-pack-v1';
-const PACKW=W.findIndex(w=>w.n===7);
 function packState(){try{return JSON.parse(localStorage.getItem(PACKKEY)||'{}')||{};}catch(e){return{};}}
 function packSave(st){try{localStorage.setItem(PACKKEY,JSON.stringify(st));}catch(e){}}
 function packCounts(){const st=packState();let t=0,d=0;PACK.forEach(g=>g[1].forEach(it=>{t++;if(st[it[0]])d++;}));return d+'/'+t;}
@@ -421,35 +522,52 @@ function wirePack(el){
     btn.querySelector('.pkcount').textContent=packCounts();
   });
 }
-(function build(){
+function weekEl(s,w,i){
+  const c=css(PH[w.ph]);
+  const el=document.createElement('section');
+  el.className='week'+(i===CUR?' current':'');
+  el.style.borderLeftColor=c;
+  el.dataset.open=(i===CUR);
+  el.id='week'+i;
+  const isPack=s.packWeek===w.n;
+  const days=w.d.map((d,k)=>{
+    const dt=pdate(w.s);dt.setDate(dt.getDate()+k);
+    const isToday=dt.getTime()===today.getTime();
+    const chip=d[4]?`<span class="chip">${d[4]}</span>`:'';
+    return `<div class="day${isToday?' today':''}"><span class="dd">${d[0]}</span>`+
+      `<span class="dot" style="background:var(${DOTC[d[1]]})"></span>`+
+      `<div class="dmain"><div class="dt">${d[2]}${chip}</div><div class="dx">${d[3]}</div></div></div>`;
+  }).join('');
+  el.innerHTML=
+    `<button class="whead" aria-expanded="${i===CUR}" aria-controls="wb${i}">`+
+    `<span class="wnum">W${w.n}</span>`+
+    `<span class="wmain"><span class="wtitle">${w.t}</span><br><span class="wdates">${fmt(w.s)} – ${fmt(w.e)}</span></span>`+
+    `<span class="wphase" style="color:${c};border:1px solid ${c}">${w.ph}</span>`+
+    `<span class="chev">▼</span></button>`+
+    `<div class="wbody" id="wb${i}"><div class="wfocus">${w.f}</div>${days}${isPack?packMarkup():''}</div>`;
+  el.querySelector('.whead').addEventListener('click',()=>toggle(i));
+  if(isPack)wirePack(el);
+  return el;
+}
+/* In the season that holds today, the weeks before this one fold into one row. */
+function buildWeeks(s){
   const root=document.getElementById('weeks');
-  W.forEach((w,i)=>{
-    const c=css(PH[w.ph]);
-    const el=document.createElement('section');
-    el.className='week'+(i===CUR?' current':'');
-    el.style.borderLeftColor=c;
-    el.dataset.open=(i===CUR);
-    el.id='week'+i;
-    const days=w.d.map(d=>{
-      const dDate=d[0].split(' ')[1],[dm,dd]=dDate.split('/').map(Number);
-      const isToday=(today.getMonth()+1===dm&&today.getDate()===dd&&today.getFullYear()===2026);
-      const chip=d[4]?`<span class="chip">${d[4]}</span>`:'';
-      return `<div class="day${isToday?' today':''}"><span class="dd">${d[0]}</span>`+
-        `<span class="dot" style="background:var(${DOTC[d[1]]})"></span>`+
-        `<div class="dmain"><div class="dt">${d[2]}${chip}</div><div class="dx">${d[3]}</div></div></div>`;
-    }).join('');
-    el.innerHTML=
-      `<button class="whead" aria-expanded="${i===CUR}" aria-controls="wb${i}">`+
-      `<span class="wnum">W${w.n}</span>`+
-      `<span class="wmain"><span class="wtitle">${w.t}</span><br><span class="wdates">${fmt(w.s)} – ${fmt(w.e)}</span></span>`+
-      `<span class="wphase" style="color:${c};border:1px solid ${c}">${w.ph}</span>`+
-      `<span class="chev">▼</span></button>`+
-      `<div class="wbody" id="wb${i}"><div class="wfocus">${w.f}</div>${days}${i===PACKW?packMarkup():''}</div>`;
-    root.appendChild(el);
-    el.querySelector('.whead').addEventListener('click',()=>toggle(i));
-    if(i===PACKW)wirePack(el);
-  });
-})();
+  root.innerHTML='';
+  let start=0;
+  if(CUR>0){
+    const btn=document.createElement('button');
+    btn.className='pastrow';btn.type='button';btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-controls','pastlist');
+    const span=CUR>1?`W${s.weeks[0].n}–${s.weeks[CUR-1].n}`:`W${s.weeks[0].n}`;
+    btn.innerHTML=`<span class="wnum">${span}</span><span class="wmain"><span class="wtitle">Past weeks (${CUR})</span></span><span class="chev">▼</span>`;
+    const list=document.createElement('div');
+    list.id='pastlist';list.hidden=true;
+    for(let i=0;i<CUR;i++)list.appendChild(weekEl(s,s.weeks[i],i));
+    btn.addEventListener('click',()=>{list.hidden=!list.hidden;btn.setAttribute('aria-expanded',String(!list.hidden));});
+    root.appendChild(btn);root.appendChild(list);
+    start=CUR;
+  }
+  for(let i=start;i<s.weeks.length;i++)root.appendChild(weekEl(s,s.weeks[i],i));
+}
 
 function fmt(s){const d=pdate(s);return['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getDate();}
 function toggle(i){
@@ -460,12 +578,19 @@ function toggle(i){
 }
 function openWeek(i,scroll){
   const el=document.getElementById('week'+i);
+  if(!el)return;
+  const list=el.closest('#pastlist');
+  if(list&&list.hidden){list.hidden=false;document.querySelector('.pastrow').setAttribute('aria-expanded','true');}
   el.dataset.open='true';
   el.querySelector('.whead').setAttribute('aria-expanded','true');
   if(scroll)el.scrollIntoView({behavior:'smooth',block:'start'});
 }
-document.getElementById('jump').addEventListener('click',()=>openWeek(CUR,true));
-window.addEventListener('load',()=>{const el=document.getElementById('week'+CUR);if(el)el.scrollIntoView({block:'center'});});
+document.getElementById('jump').addEventListener('click',()=>{
+  if(VIEW!==NOW)show(NOW);
+  if(CUR>=0)openWeek(CUR,true);
+});
+show(VIEW);
+window.addEventListener('load',()=>{const el=CUR>=0&&document.getElementById('week'+CUR);if(el)el.scrollIntoView({block:'center'});});
 
 /* Morning readiness snapshot from Coros — values updated by the daily check-in
    routine (or any session touching the repo). status comes from the Coros
