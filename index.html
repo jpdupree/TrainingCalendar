@@ -318,7 +318,7 @@ const W27 = [
  d:[['Mon 11/16','rest','Walk 20–30 min','Home from Florida. Unpack, laundry, early night. HRV 35 (below; first reading since 11/10), sleep 7h09, recovery 100%. No walk recorded.'],
     ['Tue 11/17','rest','Walk or easy bike 20–30 min','Done. Walk 2.3 mi, 45:51, avg HR 97. HRV 31 (low) despite a good night: 7h28 asleep, score 87.'],
     ['Wed 11/18','rest','Rest','HRV 41, back in range (39–57) for the first time since RDL. Run gate: one of two mornings.'],
-    ['Thu 11/19','rest','Walk or swim','Swim only once the chafing has fully closed.'],
+    ['Thu 11/19','rest','Walk or swim','Swim only once the chafing has fully closed. HRV 39, below range (range moved up to 41–57), sleep 6h19. No activity logged. Run gate resets: 0 of 2.'],
     ['Fri 11/20','rest','Rest','—'],
     ['Sat 11/21','travel','Crewing — Dinosaur Valley 100K','All day crewing friends (replaces optional climbing). Walking counts as the day\'s movement; no pacing or running with them. Eat and drink like a crew member, not a spectator: real meals, water, salt. Comfortable shoes, feet still healing.'],
     ['Sun 11/22','rest','Rest or easy walk','Rest if Saturday ran long or late. Check the run gate: HRV in range two mornings running?']]},
@@ -596,7 +596,7 @@ window.addEventListener('load',()=>{const el=CUR>=0&&document.getElementById('we
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-11-18', hrv:41, lo:39, hi:57, status:'normal', recovery:100};
+const READY = {date:'2026-11-19', hrv:39, lo:41, hi:57, status:'below', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
