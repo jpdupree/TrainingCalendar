@@ -326,7 +326,7 @@ const W27 = [
  f:'Short easy jogs only once the gate is met (HRV in range two mornings running, blisters closed, no limp). Easy means conversational, HR under ~135. After Sangre the first jog ran 2.5x the plan with friends; keep these short even if they feel great. Easy bike fills the gaps. Thanksgiving Thursday: eat, then walk.',
  d:[['Mon 11/23','rest','Rest','HRV 37 (below; 38–56) after 9h30 sleep. Five mornings below range in a row.'],
     ['Tue 11/24','run','Jog 2–3 mi (if gate met)','Otherwise walk or easy bike 30 min. HRV 43, back in range (38–56); sleep 6h22. Done. 4.1 mi, 47:58 (10:08/mi moving), avg HR 147; felt easy. Double the plan and HR above easy (ran with friends). Right knee bugging him after.'],
-    ['Wed 11/25','climb','Climbing (easy)','—'],
+    ['Wed 11/25','climb','Climbing (easy)','HRV 45 (normal; 37–55), sleep 8h47. Second in-range morning: HRV gate met. Right knee ~98% pain-free.'],
     ['Thu 11/26','rest','Thanksgiving','Walk after the meal.'],
     ['Fri 11/27','run','Jog 3 mi','Easy bike instead if HRV is below range. Run only if the right knee is pain-free walking and on stairs; otherwise walk or easy bike.'],
     ['Sat 11/28','rest','Walk / hike 45–60 min','—'],
@@ -605,7 +605,7 @@ window.addEventListener('load',()=>{const el=CUR>=0&&document.getElementById('we
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-11-24', hrv:43, lo:38, hi:56, status:'normal', recovery:100};
+const READY = {date:'2026-11-25', hrv:45, lo:37, hi:55, status:'normal', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
