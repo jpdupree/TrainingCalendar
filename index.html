@@ -328,7 +328,7 @@ const W27 = [
     ['Tue 11/24','run','Jog 2–3 mi (if gate met)','Otherwise walk or easy bike 30 min. HRV 43, back in range (38–56); sleep 6h22. Done. 4.1 mi, 47:58 (10:08/mi moving), avg HR 147; felt easy. Double the plan and HR above easy (ran with friends). Right knee bugging him after.'],
     ['Wed 11/25','climb','Climbing (easy)','HRV 45 (normal; 37–55), sleep 8h47. Second in-range morning: HRV gate met. Right knee ~98% pain-free. No climbing logged; easy bike 2.0 mi, 35 min, avg HR 94.'],
     ['Thu 11/26','rest','Thanksgiving','Walk after the meal.'],
-    ['Fri 11/27','run','Jog 3 mi','Easy bike instead if HRV is below range. Run only if the right knee is pain-free walking and on stairs; otherwise walk or easy bike.'],
+    ['Fri 11/27','run','Jog 3 mi','Easy bike instead if HRV is below range. Run only if the right knee is pain-free walking and on stairs; otherwise walk or easy bike. HRV 35 (normal, bottom of 35–55), sleep 8h27 + 1h28 nap. No run; walk 2.3 mi, 43:39, avg HR 94.'],
     ['Sat 11/28','rest','Walk / hike 45–60 min','—'],
     ['Sun 11/29','run','Easy 3–4 mi','Only if Tue and Fri felt normal.']]},
 {n:3,s:'2026-11-30',e:'2026-12-06',ph:'bridge',t:'Recovery 3 — back to routine',load:25,
@@ -605,7 +605,7 @@ window.addEventListener('load',()=>{const el=CUR>=0&&document.getElementById('we
    routine (or any session touching the repo). status comes from the Coros
    sleep-HRV assessment: low | below | normal | above. Shows stale styling when
    the date is more than a day old so old numbers never pass as fresh. */
-const READY = {date:'2026-11-25', hrv:45, lo:37, hi:55, status:'normal', recovery:100};
+const READY = {date:'2026-11-27', hrv:35, lo:35, hi:55, status:'normal', recovery:100};
 (function readiness(){
   const el=document.getElementById('ready');
   if(!el||!READY.date)return;
